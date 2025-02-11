@@ -10,7 +10,7 @@ class Base(DeclarativeBase):
 class Common(Base):
     __abstract__ = True
     
-    id: Mapped[UUID] = mapped_column(SQL_UUID(as_uuid=True), default_factory=uuid4, primary_key=True)
+    id: Mapped[UUID] = mapped_column(SQL_UUID(as_uuid=True), default=uuid4, primary_key=True)
     is_deleted: Mapped[bool] = mapped_column(default=False)
     created_at: Mapped[datetime] = mapped_column(default=datetime.now)
     created_by: Mapped[str]

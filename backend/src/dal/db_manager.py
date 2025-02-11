@@ -19,7 +19,7 @@ from sqlalchemy.ext.asyncio import (
 )
 
 forum_db_settings = ConfigProvider.forum_db_settings(production=False)
-DATABASE_URL = forum_db_settings.URI.replace("sqlite://", "sqlite+aiosqlite://")
+DATABASE_URL = forum_db_settings.ASYNC_URI
 
 class DatabaseSessionManager:
     def __init__(self, host: str, engine_kwargs: dict[str, Any] = {}):
