@@ -5,7 +5,7 @@ from fastapi.security import OAuth2PasswordRequestForm, SecurityScopes
 from jwt import DecodeError
 
 from api.main.security.tokens import TokenData
-from dal.sql.forum.resources._common import SQLModelCommon
+from dal.models._base import Common as CommonModel
 from utils.passwords import verify_password
 from api.main.security.tokens import (
     FastAPIBearerToken,
@@ -13,26 +13,25 @@ from api.main.security.tokens import (
     decode_access_token,
     oauth2_scheme,
 )
-from dal.schema.resources.user import UserPublic
-from dal.sql.forum.resources.user import DBUser
-from dal.sql.repository import SQLModelRepository
+from types.user import UserPublic
+from dal.models.user import User as UserModel
+from dal.repository import SQLModelRepository
 from sqlalchemy.ext.asyncio import AsyncSession 
-from dal.sql.db_manager import get_db_session
+from dal.db_manager import get_db_session
 from config.provider import ConfigProvider
 from uuid import UUID
   
 app_settings = ConfigProvider.main_app_settings()
-
 class AuthenticationController:
     
-    repository = SQLModelRepository(Model=DBUser)
+    repository = SQLModelRepository(Model=UserModel)
     
     async def get_user(self, uid: UUID, session: AsyncSession) -> UserPublic:
-        user = await self.repository.read(DBUser.id == uid, session=session)
+        user = await self.repository.read(UserModel.id == uid, session=session)
         return user or None
     
-    async def find_user_by_username(self, username: str, session: AsyncSession) -> SQLModelCommon | tuple[SQLModelCommon]:
-        user = (await self.repository.read(session=session, filter=DBUser.name == username))[0]
+    async def find_user_by_username(self, username: str, session: AsyncSession) -> UserPublic | tuple[UserPublic]:
+        user: UserModel = (await self.repository.read(session=session, filter=UserModel.name == username))[0]
         return user or None
 
     async def get_current_user(self, security_scopes: SecurityScopes, token: str = Depends(oauth2_scheme)) -> UserPublic:

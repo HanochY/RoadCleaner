@@ -4,7 +4,7 @@ import logging
 import logging.config
 
 from config.provider import ConfigProvider
-from dal.sql.db_manager import session_manager
+from dal.db_manager import session_manager
 from api.main.routes.user import router as user_router
 from api.main.routes.topic import router as topic_router
 from api.main.routes.authentication import router as authentication_router

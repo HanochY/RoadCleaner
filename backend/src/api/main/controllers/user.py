@@ -1,16 +1,16 @@
 from collections.abc import Sequence
 from uuid import UUID
 from utils.exceptions import *
-from dal.sql.repository import SQLModelRepository
-from dal.sql.db_manager import get_db_session
+from dal.repository import SQLModelRepository
+from dal.db_manager import get_db_session
 from fastapi import HTTPException, status
 from api.main.controllers._crud import Controller
-from dal.schema.resources.user import UserPublic, UserFullInput, UserPartialInput
-from dal.sql.forum.resources.user import DBUser
+from types.user import UserPublic, UserFullInput, UserPartialInput
+from dal.models.user import User as UserModel
 from sqlalchemy.orm.exc import NoResultFound
 
-class UserController(Controller[DBUser, UserFullInput, UserPartialInput, UserPublic]):
-    db_model = type[DBUser]
+class UserController(Controller[UserModel, UserFullInput, UserPartialInput, UserPublic]):
+    db_model = type[UserModel]
     
     def __init__(self) -> None:
         self.repository = SQLModelRepository(Model=self.db_model)
@@ -18,7 +18,7 @@ class UserController(Controller[DBUser, UserFullInput, UserPartialInput, UserPub
     async def create(self, data: UserFullInput) -> UUID:
         try:
             async for session in get_db_session():
-                object: DBUser = await self.repository.create(session=session, author_id=0, uid=0, **data)
+                object: UserModel = await self.repository.create(session=session, author_id=0, uid=0, **data)
                 await session.commit()
                 await session.refresh(object)
         except TypeError:
@@ -27,13 +27,13 @@ class UserController(Controller[DBUser, UserFullInput, UserPartialInput, UserPub
     
     async def read_by_id(self, id: UUID) -> UserPublic:
         async for session in get_db_session():
-            results: Sequence[DBUser] | None = await self.repository.read(filter=id==id, session=session)  
+            results: Sequence[UserModel] | None = await self.repository.read(filter=id==id, session=session)  
         if results: return UserPublic(results[0])
         else: raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
     
     async def read_all(self) -> list[UserPublic]:
         async for session in get_db_session():
-            results: Sequence[DBUser] | None = await self.repository.read(session=session)
+            results: Sequence[UserModel] | None = await self.repository.read(session=session)
         if results: return [UserPublic(object) for object in results]
         else: raise HTTPException(status_code=status.HTTP_204_NO_CONTENT)
     

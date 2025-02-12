@@ -4,10 +4,9 @@ from api.main.controllers.authentication import AuthenticationController
 from api.main.security.tokens import FastAPIBearerToken
 
 
-router = APIRouter(prefix="/auth", tags=["auth"])
+router = APIRouter(prefix="/ad-auth", tags=["ad-auth"])
 controller = AuthenticationController()
 
 @router.post("/token")
-async def generate_token(token: FastAPIBearerToken = 
-                      Depends(controller.authenticate_for_access_token)) -> FastAPIBearerToken:
-    return token
+async def generate_token() -> FastAPIBearerToken:
+    pass
