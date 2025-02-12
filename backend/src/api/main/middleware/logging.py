@@ -1,6 +1,6 @@
-from dal.schema.logs.uvicorn import UvicornLog
-from dal.schema.logs.request import RequestLog 
-from dal.schema.logs.error import ErrorLog
+from types.logs.uvicorn import UvicornLog
+from types.logs.request import RequestLog 
+from types.logs.error import ErrorLog
 from fastapi.requests import Request
 from fastapi.responses import Response
 from starlette.middleware.base import BaseHTTPMiddleware
@@ -26,7 +26,6 @@ class LoggingMiddleware(BaseHTTPMiddleware):
 
     async def dispatch(self, request: Request, call_next):
         try:
-
             log = await generate_fastapi_request_log(request)
             logger.info(json.loads(log.model_dump_json()))
             response = await call_next(request)

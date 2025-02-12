@@ -27,6 +27,7 @@ def generate_postgresql_uri(user: str, password: str, server: str, port: int, na
 def generate_async_postgresql_uri(user: str, password: str, server: str, port: int, name: str):
     return f"postgresql+asyncpg://{user}:{password}@{server}:{port}/{name}"
 
+
 VENDOR_SQLITE = Vendor(
     name = auto(),
     generate_uri = generate_sqlite_uri,

@@ -1,19 +1,18 @@
 from dal.models._base import Common
-#from dal.models.device_type import DeviceType
-#from dal.models.site import Site
-#from dal.models.interface import Interface
 from sqlalchemy import ForeignKey
-from sqlalchemy.orm import Mapped, relationship
-from uuid import UUID
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+from uuid import uuid4, UUID
+from sqlalchemy.dialects.postgresql import UUID as SQL_UUID
 
 class Device(Common):
     __tablename__ = 'device'
 
+    id: Mapped[UUID] = mapped_column(SQL_UUID(as_uuid=True), default=uuid4, primary_key=True)
     name: Mapped[str]
     ip: Mapped[str]
-    type_id: Mapped[UUID] = ForeignKey("device_type.id")
-    site_id: Mapped[UUID] = ForeignKey("site.id")
+    type_id: Mapped[UUID] = mapped_column(ForeignKey("device_type.id"), name="type")
+    site_id: Mapped[UUID] = mapped_column(ForeignKey("site.id"), name="site")
     
-    type: Mapped["DeviceType"] = relationship(back_populates="devices")
-    site: Mapped["Site"] = relationship(back_populates="devices")
-    interfaces: Mapped[list["Interface"]] = relationship(back_populates="device")
+    type: Mapped["DeviceType"] = relationship(back_populates="devices") # type: ignore
+    site: Mapped["Site"] = relationship(back_populates="devices") # type: ignore
+    interfaces: Mapped[list["Interface"]] = relationship(back_populates="device") # type: ignore

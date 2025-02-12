@@ -11,5 +11,3 @@ class RequestLog(BaseModel):
     host: str | None
     body: str
     headers: dict
-
-            

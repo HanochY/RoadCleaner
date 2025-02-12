@@ -1,8 +1,6 @@
 
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from datetime import datetime
-from uuid import uuid4, UUID
-from sqlalchemy.dialects.postgresql import UUID as SQL_UUID
 
 class Base(DeclarativeBase):
     pass
@@ -10,7 +8,6 @@ class Base(DeclarativeBase):
 class Common(Base):
     __abstract__ = True
     
-    id: Mapped[UUID] = mapped_column(SQL_UUID(as_uuid=True), default=uuid4, primary_key=True)
     is_deleted: Mapped[bool] = mapped_column(default=False)
     created_at: Mapped[datetime] = mapped_column(default=datetime.now)
     created_by: Mapped[str]
