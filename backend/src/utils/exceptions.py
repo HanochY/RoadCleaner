@@ -13,3 +13,4 @@ class ObjectEmptyError(Exception):
 class ObjectUnnamedError(Exception):
     def __init__(self, object_name='Object'):
        self.message = f'{object_name} is unnamed!'
+

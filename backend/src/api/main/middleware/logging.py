@@ -1,6 +1,6 @@
-from types.logs.uvicorn import UvicornLog
-from types.logs.request import RequestLog 
-from types.logs.error import ErrorLog
+from api.main.types.logs.uvicorn import UvicornLog
+from api.main.types.logs.request import RequestLog 
+from api.main.types.logs.error import ErrorLog
 from fastapi.requests import Request
 from fastapi.responses import Response
 from starlette.middleware.base import BaseHTTPMiddleware
@@ -31,5 +31,6 @@ class LoggingMiddleware(BaseHTTPMiddleware):
             response = await call_next(request)
             return response
         except Exception as e:
+            print(str(e))
             logger.error("%s %s", *ErrorLog(error_message=str(e)).model_dump().values())
             

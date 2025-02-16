@@ -6,6 +6,7 @@ from config.provider import ConfigProvider
 from utils.enums.environments import Environment
 
 def run_server():
+    print('a')
     main_settings = ConfigProvider.main_app_settings()
     uvicorn.run(
         "api.main.app:app",
@@ -14,7 +15,6 @@ def run_server():
         reload=(main_settings.ENVIRONMENT == Environment.DEVELOPMENT),
         workers=main_settings.THREAD_COUNT,
     )
-    
 
 if __name__ == "__main__":
     run_server()

@@ -6,8 +6,8 @@ from datetime import datetime
 class Tunnel(Common):
     __tablename__ = 'tunnel'
     
-    unique_name: Mapped[str] = mapped_column(SQL_UUID(as_uuid=True) primary_key=True) #change this name
+    unique_name: Mapped[SQL_UUID] = mapped_column(SQL_UUID(as_uuid=True), default=uuid4, primary_key=True) #change this name
     name: Mapped[str]
-    interfaces: Mapped[list["Interface"]] = relationship(back_populates="device") # type: ignore
+    interfaces: Mapped[list["Interface"]] = relationship(back_populates="tunnel") # type: ignore
     reinforced_at: Mapped[datetime | None] = mapped_column(default=None) #change this name
     reinforced_by: Mapped[str | None] = mapped_column(default=None) #change this name

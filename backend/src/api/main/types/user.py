@@ -5,8 +5,10 @@ from uuid import UUID
 class UserPublic(BaseModel, GenericPublic):
     id: UUID
     name: str
+    admin: bool
     
 class UserPrivate(BaseModel, GenericPrivate):
+    #is_deleted: bool
     id: UUID
     name: str
     password: str

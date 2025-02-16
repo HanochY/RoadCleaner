@@ -1,49 +1,43 @@
 from collections.abc import Sequence
-from uuid import UUID, uuid4
-from jwt import DecodeError 
+from uuid import UUID
+from utils.exceptions import *
 from dal.repository import SQLAlchemyRepository
 from dal.db_manager import get_db_session
-from fastapi import HTTPException, status, Depends
+from fastapi import HTTPException, status
 from api.main.controllers._crud import Controller
-from api.main.types.user import UserPublic, UserFullInput, UserPartialInput
-from dal.models.user import User as UserModel
+from types.device_type import DeviceTypePublic, DeviceTypeFullInput, DeviceTypePartialInput
+from dal.models.device_type import DeviceType as DeviceTypeModel
 from sqlalchemy.orm.exc import NoResultFound
 
-
-from utils.passwords import hash_password
-class UserController(Controller[UserModel, UserFullInput, UserPartialInput, UserPublic]):
-    db_model = UserModel
+class DeviceTypeController(Controller[DeviceTypeModel, DeviceTypeFullInput, DeviceTypePartialInput, DeviceTypePublic]):
+    db_model = type[DeviceTypeModel]
     
     def __init__(self) -> None:
         self.repository = SQLAlchemyRepository(Model=self.db_model)
     
-    async def create(self, data: UserFullInput) -> UUID:
+    async def create(self, data: DeviceTypeFullInput) -> UUID:
         try:
             async for session in get_db_session():
-                print('ww')
-                data.password = hash_password(data.password)
-                object: UserModel = await self.repository.create(session=session, author_id=uuid4(), **(data.model_dump()))
+                object: DeviceTypeModel = await self.repository.create(session=session, author_id=0, uid=0, **data)
                 await session.commit()
                 await session.refresh(object)
-                print('aa')
-        except TypeError as e:
-            print(e)
+        except TypeError:
             raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY)
         return object.id 
     
-    async def read_by_id(self, id: UUID) -> UserPublic:
+    async def read_by_id(self, id: UUID) -> DeviceTypePublic:
         async for session in get_db_session():
-            results: Sequence[UserModel] | None = await self.repository.read(filter=id==id, session=session)  
-        if results: return UserPublic(results[0])
+            results: Sequence[DeviceTypeModel] | None = await self.repository.read(filter=id==id, session=session)  
+        if results: return DeviceTypePublic(results[0])
         else: raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
     
-    async def read_all(self) -> list[UserPublic]:
+    async def read_all(self) -> list[DeviceTypePublic]:
         async for session in get_db_session():
-            results: Sequence[UserModel] | None = await self.repository.read(session=session)
-        if results: return [UserPublic(object) for object in results]
+            results: Sequence[DeviceTypeModel] | None = await self.repository.read(session=session)
+        if results: return [DeviceTypePublic(object) for object in results]
         else: raise HTTPException(status_code=status.HTTP_204_NO_CONTENT)
     
-    async def update(self, id: UUID, new_data: UserPartialInput) -> None:
+    async def update(self, id: UUID, new_data: DeviceTypePartialInput) -> None:
         try:
             async for session in get_db_session():
                 await self.repository.update(id=id, session=session, **new_data)
@@ -53,7 +47,7 @@ class UserController(Controller[UserModel, UserFullInput, UserPartialInput, User
             raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY)
         return None
     
-    async def partial_update(self, id: UUID, new_data: UserPartialInput) -> UserPublic:
+    async def partial_update(self, id: UUID, new_data: DeviceTypePartialInput) -> DeviceTypePublic:
         try:
             async for session in get_db_session():
                 entity = await self.repository.update(id=id, session=session, **new_data)
@@ -61,7 +55,7 @@ class UserController(Controller[UserModel, UserFullInput, UserPartialInput, User
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
         except TypeError:
             raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY)
-        return UserPublic(entity)
+        return DeviceTypePublic(entity)
     
     async def delete(self, id: UUID) -> None:
         try:
@@ -71,13 +65,13 @@ class UserController(Controller[UserModel, UserFullInput, UserPartialInput, User
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
         return None
     
-    async def undelete(self, id: UUID) -> UserPublic:
+    async def undelete(self, id: UUID) -> DeviceTypePublic:
         try:
             async for session in get_db_session():
                 entity = await self.repository.undelete(id=id, session=session)
         except NoResultFound:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
-        return UserPublic(entity)
+        return DeviceTypePublic(entity)
     
     async def hard_delete(self, id: UUID) -> None:
         try:

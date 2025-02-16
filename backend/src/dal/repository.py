@@ -1,24 +1,25 @@
-from sqlmodel import select
 from sqlalchemy.ext.asyncio import AsyncSession 
-from sqlalchemy import ColumnExpressionArgument
+from sqlalchemy import ColumnExpressionArgument, select
 from dal.models._base import Common
 from collections.abc import Sequence
 from datetime import datetime
 from uuid import UUID
 
-class SQLModelRepository():
+class SQLAlchemyRepository():
     Model: type[Common]
     
     def __init__(self, Model: type[Common]):
         self.Model = Model
         
     async def create(self, session: AsyncSession, author_id: UUID, **data) -> Common:
+        print(data)
         entity = self.Model(**data)
         entity.created_at = datetime.now()
         entity.created_by = author_id
         entity.modified_at = datetime.now()
         entity.modified_by = author_id
         session.add(entity)
+        print(str(entity))
         return entity
         
     async def read(self, 

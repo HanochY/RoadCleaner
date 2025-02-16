@@ -1,12 +1,11 @@
 
 from uuid import UUID
-from utils.exceptions import *
-from dal.sql.forum.resources._common import SQLModelCommon
-from dal.schema.resources._generic import GenericOutput, GenericFullInput, GenericPartialInput
+from dal.models._base import Common
+from api.main.types._generic import GenericOutput, GenericFullInput, GenericPartialInput
 from abc import ABC, abstractmethod
 from typing import TypeVar, Generic
 
-T = TypeVar('T', bound=SQLModelCommon) # Any conventional SQLAlchemy ORM object
+T = TypeVar('T', bound=Common) # Any conventional SQLAlchemy ORM object
 C = TypeVar('C', bound=GenericFullInput)  # Any Create object
 U = TypeVar('U', bound=GenericPartialInput)  # Any Update object
 O = TypeVar('O', bound=GenericOutput)  # Any Output object

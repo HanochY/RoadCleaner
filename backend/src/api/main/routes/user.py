@@ -1,24 +1,28 @@
 from fastapi import APIRouter, Depends, Security, status, Response
 from api.main.controllers.user import UserController
-from api.main.controllers.authentication import AuthenticationController
+from api.main.security.authorization import AuthorizationManager
 from utils.exceptions import *
-from dal.schema.resources.user import UserPublic, UserFullInput, UserPartialInput
+from api.main.types.user import UserPublic, UserFullInput, UserPartialInput
 from typing_extensions import Annotated
 from uuid import UUID
+from api.main.security.tokens import (
+    oauth2_scheme
+)
 
 router = APIRouter(prefix="/user", tags=["user"])
 
 controller = UserController()
-auth_controller = AuthenticationController() # to be moved
+authorization_manager = AuthorizationManager()
 
 @router.post('/', status_code=status.HTTP_201_CREATED)
-async def create_user(user: Annotated[UserFullInput, Depends]) -> UUID | None:
-    response = await controller.create(data=user)
+async def create_user(new_user: Annotated[UserFullInput, Depends]) -> UUID | None:
+    print('a')
+    response = await controller.create(data=new_user)
     return response
 
 @router.get('/me', status_code=status.HTTP_200_OK, response_model=UserPublic)
 async def read_current_user(current_user: Annotated[UserPublic,
-                                                    Security(auth_controller.get_current_user, 
+                                                    Security(authorization_manager.authorize_user, 
                                                     scopes=["self"])]) -> UserPublic:
     return current_user
 

@@ -6,6 +6,6 @@ from sqlalchemy.dialects.postgresql import UUID as SQL_UUID
 class DeviceType(Common):
     __tablename__ = 'device_type'
     
-    id: Mapped[UUID] = mapped_column(SQL_UUID(as_uuid=True), default=uuid4, primary_key=True)
+    id: Mapped[SQL_UUID] = mapped_column(SQL_UUID(as_uuid=True), default=uuid4, primary_key=True)
     name: Mapped[str]
     devices: Mapped[list["Device"]] = relationship(back_populates="type") # type: ignore

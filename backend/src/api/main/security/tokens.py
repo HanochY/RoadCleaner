@@ -13,11 +13,20 @@ TOKEN_TYPE_BEARER = "bearer"
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token",
                                     scopes={
-                                        "self:read": "Read information about the current user.",
-                                        "items:read": "Read items.",
-                                        "items": "CRUD items.",
-                                        "users:read": "Read users.",
-                                        "users": "CRUD users.",
+                                            "device_type:read": "Read device types.",
+                                            "device_type": "CRUD device types.",
+                                            "device:read": "Read devices.",
+                                            "device": "CRUD devices.",
+                                            "interface:read": "Read interfaces.",
+                                            "interface": "CRUD interfaces.",
+                                            "site:read": "Read sites.",
+                                            "site": "CRUD sites.",
+                                            "tunnel:read": "Read sites.",
+                                            "tunnel": "CRUD sites.",
+                                            "user:read": "Read users.",
+                                            "user": "CRUD users.",
+                                            "self:read": "Read information about the current user.",
+                                            "self": "CRUD current user.",
                                         }
                                     )  
 class TokenData(BaseModel):
@@ -40,8 +49,5 @@ def encode_access_token(data: TokenData) -> str:
 
 
 async def decode_access_token(token: str) -> TokenData | None:
-    try:
-        data: TokenData = await decode(token, SECRET_KEY, ALGORITHM)
-        return TokenData(data)
-    except TypeError:
-        raise DecodeError
+    data = await decode(token, SECRET_KEY, ALGORITHM)
+    return TokenData(data)
