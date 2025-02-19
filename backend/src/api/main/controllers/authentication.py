@@ -1,23 +1,18 @@
-from datetime import timedelta
-
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 
+from config.apps._schema import AppSettings
 from utils.passwords import verify_password
 from api.main.security.tokens import (
-    FastAPIBearerToken,
+    OAuthBearerToken,
     encode_access_token,
     TokenData
 )
-from api.main.types.user import UserPublic
 from dal.models.user import User as UserModel
 from dal.repository import SQLAlchemyRepository
 from sqlalchemy.ext.asyncio import AsyncSession 
-from dal.db_manager import get_db_session
-from config.provider import ConfigProvider
-from uuid import UUID
+from dal.db_manager import generate_db_session
   
-app_settings = ConfigProvider.main_app_settings()
 class AuthenticationController:
     
     repository = SQLAlchemyRepository(Model=UserModel)
@@ -26,12 +21,13 @@ class AuthenticationController:
         user: UserModel = (await self.repository.read(session=session, filter=UserModel.name == username))[0]
         return user or None
 
-    async def authenticate_for_access_token(self, form_data: OAuth2PasswordRequestForm = Depends()) -> FastAPIBearerToken:
+    async def authenticate_for_access_token(self, form_data: OAuth2PasswordRequestForm = Depends()) -> OAuthBearerToken:
         try:
-            async for session in get_db_session():
+            async for session in generate_db_session():
                 user = await self.find_user_by_username(form_data.username, session)
+            requested_scopes = form_data.scopes
             if user:
-                scopes = ["device_type:read",
+                allowed_scopes = ["device_type:read",
                                             "device:read",
                                             "device",
                                             "interface:read",
@@ -39,18 +35,19 @@ class AuthenticationController:
                                             "site:read",
                                             "site",
                                             "tunnel:read",
-                                            "tunnel",]
+                                            "tunnel",
+                                            "self:read",
+                                            "self"]
                 if user.admin:
-                    scopes = scopes + [
+                    allowed_scopes = allowed_scopes + [
                                             "device_type",
                                             "user:read",
                                             "user",]
                 correct_password_hash = user.password
                 if verify_password(form_data.password, correct_password_hash):
                     token = encode_access_token(TokenData(sub=user.id,
-                                                                    scopes=scopes,
-                                                                    exp=timedelta(minutes=app_settings.ACCESS_TOKEN_EXPIRE_MINUTES)))
-                    return FastAPIBearerToken(token)
+                                                                    scopes=[scope for scope in requested_scopes if scope in allowed_scopes]))
+                    return OAuthBearerToken(access_token=token)
                 else:
                     raise HTTPException(
                         status_code=status.HTTP_401_UNAUTHORIZED,
@@ -65,4 +62,4 @@ class AuthenticationController:
                     )
 
         except Exception as e:
-            print(e)
+            raise

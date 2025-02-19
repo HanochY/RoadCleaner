@@ -1,5 +1,6 @@
 from api.main.types._generic import GenericPublic, GenericPrivate, GenericFullInput, GenericPartialInput
-from pydantic import BaseModel, field_validator
+from api.main.types.metadata import Metadata 
+from pydantic import BaseModel
 from ipaddress import IPv4Address
 from uuid import UUID
 
@@ -11,7 +12,7 @@ class InterfacePublic(BaseModel, GenericPublic):
     device_id: UUID
     tunnel_id: UUID
 
-class InterfacePrivate(BaseModel, GenericPrivate):
+class InterfacePrivate(Metadata, GenericPrivate):
     id: UUID
     name: str
     ip: IPv4Address

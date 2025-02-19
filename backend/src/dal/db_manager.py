@@ -70,6 +70,6 @@ class DatabaseSessionManager:
 session_manager = DatabaseSessionManager(DATABASE_URL)
 
 
-async def get_db_session():
+async def generate_db_session():
     async with session_manager.session() as session:
         yield session

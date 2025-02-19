@@ -34,20 +34,26 @@ class TokenData(BaseModel):
     scopes: list[str] = []
     exp: datetime = datetime.now(timezone.utc) + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     
-class FastAPIToken(BaseModel):
-    data: str
+class OAuthToken(BaseModel):
+    access_token: str
     token_type: str
-    
-    def __init__(self, value):
-        self.data = value
 
-class FastAPIBearerToken(FastAPIToken):
+class OAuthBearerToken(OAuthToken):
+    access_token: str
     token_type: str = TOKEN_TYPE_BEARER
     
 def encode_access_token(data: TokenData) -> str:
-    return(encode(data.model_dump(), SECRET_KEY, ALGORITHM))
+    data_dump = data.model_dump()
+    data_dump['sub'] = str(data.sub)
+    data_dump['scopes'] = ' '.join(data.scopes)
+    return(encode(data_dump, SECRET_KEY, ALGORITHM))
 
-
-async def decode_access_token(token: str) -> TokenData | None:
-    data = await decode(token, SECRET_KEY, ALGORITHM)
-    return TokenData(data)
+def decode_access_token(token: str) -> TokenData | None:
+    print("aaassss")
+    try:
+        data = decode(token, SECRET_KEY, [ALGORITHM])
+        print(data)
+    except Exception as e:
+        print(str(e))
+    print(TokenData(sub=UUID(data['sub']), scopes=data['scopes'].split(), exp=data['exp']))
+    return TokenData(sub=UUID(data['sub']), scopes=data['scopes'].split(), exp=data['exp'])

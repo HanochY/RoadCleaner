@@ -1,13 +1,14 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, status
 
 from api.main.controllers.authentication import AuthenticationController
-from api.main.security.tokens import FastAPIBearerToken
+from api.main.security.tokens import OAuthBearerToken
 
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 controller = AuthenticationController()
 
-@router.post("/token")
-async def generate_token(token: FastAPIBearerToken = 
-                      Depends(controller.authenticate_for_access_token)) -> FastAPIBearerToken:
-    return token
+@router.post("/token", status_code=status.HTTP_200_OK)
+async def generate_token(token: OAuthBearerToken = 
+                      Depends(controller.authenticate_for_access_token)) -> OAuthBearerToken:
+    print(token)
+    return token.model_dump()

@@ -7,6 +7,11 @@ from config.provider import ConfigProvider
 from dal.db_manager import session_manager
 from api.main.routes.authentication_ldap import router as authentication_ldap_router
 from api.main.routes.authentication import router as authentication_router
+from api.main.routes.device_type import router as device_type_router
+from api.main.routes.device import router as device_router
+from api.main.routes.interface import router as interface_router
+from api.main.routes.site import router as site_router
+from api.main.routes.tunnel import router as tunnel_router
 from api.main.routes.user import router as user_router
 
 from api.main.middleware.logging import LoggingMiddleware
@@ -42,4 +47,9 @@ if app_settings.ALLOWED_ORIGINS:
 app.add_middleware(LoggingMiddleware)
 #app.include_router(ldap_authentication_router)
 app.include_router(authentication_router)
+app.include_router(device_type_router)
+app.include_router(device_router)
+app.include_router(interface_router)
+app.include_router(site_router)
+app.include_router(tunnel_router)
 app.include_router(user_router)

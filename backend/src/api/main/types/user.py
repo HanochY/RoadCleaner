@@ -1,4 +1,5 @@
 from api.main.types._generic import GenericPublic, GenericPrivate, GenericFullInput, GenericPartialInput
+from api.main.types.metadata import Metadata 
 from pydantic import BaseModel
 from uuid import UUID
 
@@ -7,7 +8,7 @@ class UserPublic(BaseModel, GenericPublic):
     name: str
     admin: bool
     
-class UserPrivate(BaseModel, GenericPrivate):
+class UserPrivate(Metadata, GenericPrivate):
     #is_deleted: bool
     id: UUID
     name: str

@@ -19,10 +19,9 @@ class MainApp:
         DEBUG: bool = True
         ALLOWED_ORIGINS: list[AnyUrl] = ["http://localhost", "http://localhost:5173", "https://localhost", "https://localhost:5173"]
         THREAD_COUNT: int = 1
-        SECRET_KEY: str = secrets.token_urlsafe(32)
+        SECRET_KEY: str = 'aEktMP3gxSPEAxb8bRGfsDps8YJUvv5dlOnV27j9Q1w'
         ACCESS_TOKEN_EXPIRE_MINUTES: int = 7200 # 5 Days
         ACCESS_TOKEN_ALGORITHM: str = "HS256"
-
 
     class Production(AppSettings):
         model_config = SettingsConfigDict(env_file='.env',
@@ -35,6 +34,6 @@ class MainApp:
         TRACK_MODIFICATIONS: bool = False
         DEBUG: bool = False
         THREAD_COUNT: int = os.cpu_count() * 2 + 1
-        SECRET_KEY: str = secrets.token_urlsafe(32)
+        SECRET_KEY: str = '' #secrets.token_urlsafe(32)
         ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
         ACCESS_TOKEN_ALGORITHM: str = "HS256"

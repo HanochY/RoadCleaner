@@ -31,6 +31,6 @@ class LoggingMiddleware(BaseHTTPMiddleware):
             response = await call_next(request)
             return response
         except Exception as e:
-            print(str(e))
+            print(e)
             logger.error("%s %s", *ErrorLog(error_message=str(e)).model_dump().values())
-            
+            raise

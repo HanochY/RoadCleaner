@@ -1,4 +1,5 @@
 from api.main.types._generic import GenericPublic, GenericPrivate, GenericFullInput, GenericPartialInput
+from api.main.types.metadata import Metadata 
 from pydantic import BaseModel
 from ipaddress import IPv4Address
 from uuid import UUID
@@ -10,7 +11,7 @@ class DevicePublic(BaseModel, GenericPublic):
     type: UUID
     site: UUID
     
-class DevicePrivate(BaseModel, GenericPrivate):
+class DevicePrivate(Metadata, GenericPrivate):
     id: UUID
     name: str
     ip: IPv4Address

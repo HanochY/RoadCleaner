@@ -12,7 +12,7 @@ class SQLAlchemyRepository():
         self.Model = Model
         
     async def create(self, session: AsyncSession, author_id: UUID, **data) -> Common:
-        print(data)
+        print(self.Model)
         entity = self.Model(**data)
         entity.created_at = datetime.now()
         entity.created_by = author_id
@@ -34,6 +34,7 @@ class SQLAlchemyRepository():
             statement = statement.offset(offset)
         if limit: 
             statement = statement.limit(limit)
+        print(statement)
         entities = await session.execute(statement)
         return entities.scalars().all()
     

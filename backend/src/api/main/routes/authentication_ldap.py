@@ -1,10 +1,10 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, status
 from api.main.controllers.authentication import AuthenticationController
-from api.main.security.tokens import FastAPIBearerToken
+from api.main.security.tokens import OAuthBearerToken
 
 router = APIRouter(prefix="/ad-auth", tags=["ad-auth"])
 controller = AuthenticationController()
 
-@router.post("/token")
-async def generate_token() -> FastAPIBearerToken:
+@router.post("/token", status_code=status.HTTP_200_OK)
+async def generate_token() -> OAuthBearerToken:
     pass

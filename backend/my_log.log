@@ -21,3 +21,152 @@
 [SQL: INSERT INTO "user" (id, name, password, admin, is_deleted, created_at, created_by, modified_at, modified_by, deleted_at, deleted_by) VALUES ($1::UUID, $2::VARCHAR, $3::VARCHAR, $4::BOOLEAN, $5::BOOLEAN, $6::TIMESTAMP WITHOUT TIME ZONE, $7::VARCHAR, $8::TIMESTAMP WITHOUT TIME ZONE, $9::VARCHAR, $10::TIMESTAMP WITHOUT TIME ZONE, $11::VARCHAR)]
 [parameters: (UUID('0e420bc9-2e50-48a6-8faa-0dbcb841fd9b'), 'hanoch2', '$2b$12$J3WWaAKkD4rgTZIS2xqT7eHHtGfxD/jnFgomsMrp3aOMM13TVuu2e', True, False, datetime.datetime(2025, 2, 16, 16, 39, 54, 786389), UUID('f1ffa77e-34f0-4db2-bf27-0ff2c2f65f61'), datetime.datetime(2025, 2, 16, 16, 39, 54, 786389), UUID('f1ffa77e-34f0-4db2-bf27-0ff2c2f65f61'), None, None)]
 (Background on this error at: https://sqlalche.me/e/20/dbapi)
+[ERROR] - 2025-02-19 11:53:24,100 - root - 002ba3d2-de86-4cb4-9fd4-523c11459d9f 1 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': None, 'url': 'https://errors.pydantic.dev/2.7/v/model_attributes_type'}
+
+[ERROR] - 2025-02-19 12:06:30,063 - root - 002ba3d2-de86-4cb4-9fd4-523c11459d9f 1 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': None, 'url': 'https://errors.pydantic.dev/2.7/v/model_attributes_type'}
+
+[ERROR] - 2025-02-19 12:06:37,500 - root - 002ba3d2-de86-4cb4-9fd4-523c11459d9f 1 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': None, 'url': 'https://errors.pydantic.dev/2.7/v/model_attributes_type'}
+
+[ERROR] - 2025-02-19 12:08:12,443 - root - 002ba3d2-de86-4cb4-9fd4-523c11459d9f 1 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': None, 'url': 'https://errors.pydantic.dev/2.7/v/model_attributes_type'}
+
+[ERROR] - 2025-02-19 12:18:08,121 - root - 002ba3d2-de86-4cb4-9fd4-523c11459d9f 1 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': None, 'url': 'https://errors.pydantic.dev/2.7/v/model_attributes_type'}
+
+[ERROR] - 2025-02-19 12:18:10,531 - root - 002ba3d2-de86-4cb4-9fd4-523c11459d9f 1 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': None, 'url': 'https://errors.pydantic.dev/2.7/v/model_attributes_type'}
+
+[ERROR] - 2025-02-19 12:23:00,887 - root - 002ba3d2-de86-4cb4-9fd4-523c11459d9f 1 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': None, 'url': 'https://errors.pydantic.dev/2.7/v/model_attributes_type'}
+
+[ERROR] - 2025-02-19 12:34:24,462 - root - 03d30143-15d2-4fa3-885d-c316e30939b6 1 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': None, 'url': 'https://errors.pydantic.dev/2.7/v/model_attributes_type'}
+
+[ERROR] - 2025-02-19 12:38:10,350 - root - 03d30143-15d2-4fa3-885d-c316e30939b6 1 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': None, 'url': 'https://errors.pydantic.dev/2.7/v/model_attributes_type'}
+
+[ERROR] - 2025-02-19 12:38:43,997 - root - efb45782-4a00-40c4-b6d4-be8949dd5aea 1 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': None, 'url': 'https://errors.pydantic.dev/2.7/v/model_attributes_type'}
+
+[ERROR] - 2025-02-19 12:47:07,223 - root - f54e6ced-d151-45a7-b18c-4a75e95b30a5 1 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': None, 'url': 'https://errors.pydantic.dev/2.7/v/model_attributes_type'}
+
+[ERROR] - 2025-02-19 12:50:03,872 - root - f54e6ced-d151-45a7-b18c-4a75e95b30a5 1 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': None, 'url': 'https://errors.pydantic.dev/2.7/v/model_attributes_type'}
+
+[ERROR] - 2025-02-19 12:50:55,251 - root - f54e6ced-d151-45a7-b18c-4a75e95b30a5 1 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': None, 'url': 'https://errors.pydantic.dev/2.7/v/model_attributes_type'}
+
+[ERROR] - 2025-02-19 12:51:54,271 - root - 895a44bd-7428-40af-b265-a7d5cd9747e3 1 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': None, 'url': 'https://errors.pydantic.dev/2.7/v/model_attributes_type'}
+
+[ERROR] - 2025-02-19 12:52:53,083 - root - 247785ba-8564-437e-982d-e67a4dededbf 1 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': None, 'url': 'https://errors.pydantic.dev/2.7/v/model_attributes_type'}
+
+[ERROR] - 2025-02-19 12:53:30,281 - root - 38c08d39-2c73-4fc0-b5f7-d21830420574 1 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': None, 'url': 'https://errors.pydantic.dev/2.7/v/model_attributes_type'}
+
+[ERROR] - 2025-02-19 12:54:12,896 - root - 4339adb4-1ddd-4e1f-bc10-bfd53f540b83 1 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': None, 'url': 'https://errors.pydantic.dev/2.7/v/model_attributes_type'}
+
+[ERROR] - 2025-02-19 12:58:40,499 - root - c79149fd-0c43-4f2c-b860-66accb18db66 1 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': None, 'url': 'https://errors.pydantic.dev/2.7/v/model_attributes_type'}
+
+[ERROR] - 2025-02-19 12:59:25,973 - root - 3b1e179b-1941-439a-94ba-68bcd7c460b6 1 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': None, 'url': 'https://errors.pydantic.dev/2.7/v/model_attributes_type'}
+
+[ERROR] - 2025-02-19 12:59:57,351 - root - ecdbdf54-913f-491d-991d-312276469331 1 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': None, 'url': 'https://errors.pydantic.dev/2.7/v/model_attributes_type'}
+
+[ERROR] - 2025-02-19 14:08:47,333 - root - 04ae9fda-e2ab-43fd-8f78-2bb6b11d69fe 1 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': None, 'url': 'https://errors.pydantic.dev/2.7/v/model_attributes_type'}
+
+[ERROR] - 2025-02-19 14:12:06,391 - root - f114b0c9-24a5-425c-9381-a27054422c59 1 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': None, 'url': 'https://errors.pydantic.dev/2.7/v/model_attributes_type'}
+
+[ERROR] - 2025-02-19 14:13:26,152 - root - 5e1773a4-6873-440a-a3ee-28b23b5e27b1 1 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': None, 'url': 'https://errors.pydantic.dev/2.7/v/model_attributes_type'}
+
+[ERROR] - 2025-02-19 15:02:19,900 - root - ccd27940-96c9-4009-94f1-a3d6087d7231 1 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': None, 'url': 'https://errors.pydantic.dev/2.7/v/model_attributes_type'}
+
+[ERROR] - 2025-02-19 15:02:45,305 - root - ccd27940-96c9-4009-94f1-a3d6087d7231 1 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': None, 'url': 'https://errors.pydantic.dev/2.7/v/model_attributes_type'}
+
+[ERROR] - 2025-02-19 15:03:24,401 - root - 7cb481fd-8dca-48e3-bb85-ca0db9fa72b8 1 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': None, 'url': 'https://errors.pydantic.dev/2.7/v/model_attributes_type'}
+
+[ERROR] - 2025-02-19 15:07:37,762 - root - f8e2035d-7b57-4ffe-8a65-33555ac7da9a 1 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': None, 'url': 'https://errors.pydantic.dev/2.7/v/model_attributes_type'}
+
+[ERROR] - 2025-02-19 15:08:16,012 - root - 785eda6d-4e21-4d51-a231-5235d077909d 1 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': None, 'url': 'https://errors.pydantic.dev/2.7/v/model_attributes_type'}
+
+[ERROR] - 2025-02-19 15:10:02,313 - root - ea33092c-a560-4a73-9aff-dbddbc333cd6 1 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': None, 'url': 'https://errors.pydantic.dev/2.7/v/model_attributes_type'}
+
+[ERROR] - 2025-02-19 15:12:12,766 - root - c7906bb7-ecb2-4116-8125-96f26fdf5db0 1 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': None, 'url': 'https://errors.pydantic.dev/2.7/v/model_attributes_type'}
+
+[ERROR] - 2025-02-19 16:04:43,946 - root - f0bbea7e-6080-4969-9833-0d0163f9dc15 'AuthorizationManager' object has no attribute 'is_deleted'
+[ERROR] - 2025-02-19 16:25:23,516 - root - 30e721ea-1282-4b00-9103-3a642f8ea457 'AuthorizationManager' object has no attribute 'is_deleted'
+[ERROR] - 2025-02-19 16:26:46,766 - root - f931bd74-0703-4c76-8d4e-6b71e4c306ba 'AuthorizationManager' object has no attribute 'is_deleted'
+[ERROR] - 2025-02-19 16:31:45,506 - root - 4a2324fe-6e40-462b-aae5-26fdb13e5b85 'AuthorizationManager' object has no attribute 'is_deleted'
+[ERROR] - 2025-02-19 17:11:02,087 - root - b3ef2fe4-a6d4-4bbb-ac37-9fd1a3cba627 1 validation error for OAuthBearerToken
+access_token
+  Field required [type=missing, input_value={'data': 'eyJhbGciOiJIUzI...XsoSQX000Jg2VvbE3cOBeE'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.7/v/missing
+[ERROR] - 2025-02-19 17:12:32,949 - root - b3ef2fe4-a6d4-4bbb-ac37-9fd1a3cba627 1 validation error for OAuthBearerToken
+access_token
+  Field required [type=missing, input_value={'data': 'eyJhbGciOiJIUzI...XsoSQX000Jg2VvbE3cOBeE'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.7/v/missing
+[ERROR] - 2025-02-19 17:45:38,253 - root - be864ea2-0d2b-4343-8c5f-2ac6af8f0f5a 'coroutine' object has no attribute 'is_deleted'
+[ERROR] - 2025-02-19 17:47:13,645 - root - be864ea2-0d2b-4343-8c5f-2ac6af8f0f5a 'coroutine' object has no attribute 'is_deleted'
+[ERROR] - 2025-02-19 17:50:30,222 - root - 78d01624-fffa-4a3f-ab83-c22486207de1 'coroutine' object has no attribute 'is_deleted'
+[ERROR] - 2025-02-19 18:11:04,449 - root - de075f70-1f1d-40fd-b972-1d92841dac3c object dict can't be used in 'await' expression
+[ERROR] - 2025-02-19 18:19:58,035 - root - b12d4dd4-02b0-4b9c-9ce7-83a447339109 cannot access local variable 'data' where it is not associated with a value
+[ERROR] - 2025-02-19 18:24:48,474 - root - 99b4bb25-2542-4015-aa2f-200630d32f1a cannot access local variable 'data' where it is not associated with a value
+[ERROR] - 2025-02-19 18:31:48,396 - root - b3d79783-39c5-4fd4-a446-13994f61526c BaseModel.__init__() takes 1 positional argument but 2 were given
+[ERROR] - 2025-02-19 18:33:20,425 - root - d8d7b3cb-0b1d-419a-853f-478611e94255 cannot access local variable 'data' where it is not associated with a value
+[ERROR] - 2025-02-19 19:41:26,998 - root - a391d5d1-14ce-4ca9-b564-a0c27849acd9 'dict' object has no attribute 'sub'
+[ERROR] - 2025-02-19 19:42:20,658 - root - 2ca11651-435c-44ab-a96a-2fa986f4d85d 'async_generator' object has no attribute 'execute'
+[ERROR] - 2025-02-19 19:46:39,989 - root - 22fa3130-61ec-4b9e-9967-2f77e5e0a81f 'async_generator' object has no attribute 'execute'
+[ERROR] - 2025-02-19 19:48:06,965 - root - 16367d32-c2a3-46bd-96f7-95dea9933613 'async_generator' object has no attribute 'execute'
+[ERROR] - 2025-02-19 19:49:41,742 - root - 28144432-6f1d-4125-ab93-407e7331f722 object async_generator can't be used in 'await' expression
+[ERROR] - 2025-02-19 20:01:26,771 - root - feb0f1e7-65dc-4ec2-9a32-6a08d915e72a BaseModel.__init__() takes 1 positional argument but 2 were given
+[ERROR] - 2025-02-19 20:04:21,705 - root - a0f4ca77-eb53-4f39-aeda-2c1f2def3bac api.main.types.user.UserPrivate() argument after ** must be a mapping, not list
+[ERROR] - 2025-02-19 20:04:49,767 - root - acaac6ec-fd12-4d5c-8f17-b2f8602f5dd4 1 validation error for UserPrivate
+  Input should be a valid dictionary or instance of UserPrivate [type=model_type, input_value=<dal.models.user.User obj...t at 0x0000021F33840890>, input_type=User]
+    For further information visit https://errors.pydantic.dev/2.7/v/model_type
+[ERROR] - 2025-02-19 20:05:16,295 - root - cabe8faf-88be-414b-91cb-faa88a79b786 api.main.types.user.UserPrivate() argument after ** must be a mapping, not User
+[ERROR] - 2025-02-19 20:05:41,415 - root - cabe8faf-88be-414b-91cb-faa88a79b786 api.main.types.user.UserPrivate() argument after ** must be a mapping, not User
+[ERROR] - 2025-02-19 20:08:45,579 - root - 90fe2d49-3d6b-4c85-a4cf-76d57c31c496 'coroutine' object is not subscriptable
+[ERROR] - 2025-02-19 20:08:53,782 - root - c2038fd8-d767-45e3-95dd-c2f38d62f0f6 'coroutine' object is not subscriptable
+[ERROR] - 2025-02-19 20:09:55,442 - root - c2038fd8-d767-45e3-95dd-c2f38d62f0f6 'coroutine' object is not subscriptable
+[ERROR] - 2025-02-19 20:09:58,855 - root - 8a669bab-6f03-4fc0-b653-f130ff042db7 3 validation errors for UserPrivate
+created_by
+  Input should be a valid string [type=string_type, input_value=UUID('8453c2de-bc7c-44db-a775-967c96f63cb4'), input_type=UUID]
+    For further information visit https://errors.pydantic.dev/2.7/v/string_type
+modified_by
+  Input should be a valid string [type=string_type, input_value=UUID('8453c2de-bc7c-44db-a775-967c96f63cb4'), input_type=UUID]
+    For further information visit https://errors.pydantic.dev/2.7/v/string_type
+deleted_by
+  Input should be a valid string [type=string_type, input_value=UUID('cd4cb58e-97ff-4613-bc63-28074b1d40fc'), input_type=UUID]
+    For further information visit https://errors.pydantic.dev/2.7/v/string_type
+[ERROR] - 2025-02-19 20:12:05,100 - root - 8a669bab-6f03-4fc0-b653-f130ff042db7 3 validation errors for UserPrivate
+created_by
+  Input should be a valid string [type=string_type, input_value=UUID('8453c2de-bc7c-44db-a775-967c96f63cb4'), input_type=UUID]
+    For further information visit https://errors.pydantic.dev/2.7/v/string_type
+modified_by
+  Input should be a valid string [type=string_type, input_value=UUID('8453c2de-bc7c-44db-a775-967c96f63cb4'), input_type=UUID]
+    For further information visit https://errors.pydantic.dev/2.7/v/string_type
+deleted_by
+  Input should be a valid string [type=string_type, input_value=UUID('cd4cb58e-97ff-4613-bc63-28074b1d40fc'), input_type=UUID]
+    For further information visit https://errors.pydantic.dev/2.7/v/string_type
+[ERROR] - 2025-02-19 20:26:09,803 - root - 684c3635-6f05-4249-bdb9-798b02dda979 (sqlalchemy.dialects.postgresql.asyncpg.Error) <class 'asyncpg.exceptions.DataError'>: invalid input for query argument $5: 0 ('int' object has no attribute 'bytes')
+[SQL: INSERT INTO device_type (id, name, is_deleted, created_at, created_by, modified_at, modified_by, deleted_at, deleted_by) VALUES ($1::UUID, $2::VARCHAR, $3::BOOLEAN, $4::TIMESTAMP WITHOUT TIME ZONE, $5::UUID, $6::TIMESTAMP WITHOUT TIME ZONE, $7::UUID, $8::TIMESTAMP WITHOUT TIME ZONE, $9::UUID)]
+[parameters: (UUID('7cea0965-162e-4682-bee6-09e7532b5582'), 'company1', False, datetime.datetime(2025, 2, 19, 20, 26, 9, 799842), 0, datetime.datetime(2025, 2, 19, 20, 26, 9, 799842), 0, None, UUID('d73db861-01bc-4152-aa77-f50723548b52'))]
+(Background on this error at: https://sqlalche.me/e/20/dbapi)
