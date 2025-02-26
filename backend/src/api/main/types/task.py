@@ -1,0 +1,37 @@
+from api.main.types._generic import GenericPublic, GenericPrivate, GenericFullInput, GenericPartialInput
+from api.main.types.metadata import Metadata 
+from pydantic import BaseModel
+from uuid import UUID
+from datetime import datetime
+
+class TaskPublic(BaseModel, GenericPublic):
+    id: UUID
+    name: str
+    subject: UUID
+    details: str
+    start_time: datetime
+    end_time: datetime | None
+    
+class TaskPrivate(Metadata, GenericPrivate):
+    id: UUID
+    name: str
+    subject: UUID
+    details: str
+    start_time: datetime
+    end_time: datetime | None
+    
+class TaskFullInput(BaseModel, GenericFullInput):
+    id: UUID
+    name: str
+    subject: UUID
+    details: str
+    start_time: datetime
+    end_time: datetime | None
+
+class TaskPartialInput(BaseModel, GenericPartialInput):
+    id: UUID | None
+    name: str | None
+    subject: UUID | None
+    details: str | None
+    start_time: datetime | None
+    end_time: datetime | None

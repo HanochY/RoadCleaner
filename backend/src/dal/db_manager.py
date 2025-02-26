@@ -5,7 +5,9 @@ from dal.models.device_type import DeviceType
 from dal.models.device import Device
 from dal.models.interface import Interface
 from dal.models.site import Site
-from dal.models.tunnel import Tunnel
+from dal.models.tunnel._base import Tunnel
+from dal.models.tunnel.cisco import CiscoTunnel
+from dal.models.tunnel.juniper import JuniperTunnel
 from dal.models.user import User
 
 import contextlib

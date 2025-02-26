@@ -18,12 +18,19 @@ async def create_user(new_user: Annotated[UserFullInput, Depends],
     response = await controller.create(current_user=current_user, data=new_user)
     return response
 
+@router.get('/all', status_code=status.HTTP_200_OK, response_model=list[UserPublic])
+async def read_all_users(current_user: Annotated[UserPrivate,
+                                                    Security(authorize_user, 
+                                                    scopes=["user:read"])]) -> list[UserPublic] | None:
+    response: list[UserPublic] | None = await controller.read_all()
+    return response
+
 @router.get('/{id}', status_code=status.HTTP_200_OK)
 async def read_user(id: UUID,
                     current_user: Annotated[UserPrivate,
                                                     Security(authorize_user, 
                                                     scopes=["user:read"])]) -> None:
-    response: UserPublic | None = await controller.read_by_id(current_user=current_user, id=id)
+    response: UserPublic | None = await controller.read_by_id(id=id)
     return response
     
 @router.get('/me', status_code=status.HTTP_200_OK, response_model=UserPublic)
@@ -34,12 +41,7 @@ async def read_current_user(current_user: Annotated[UserPrivate,
 
 
     
-@router.get('/all', status_code=status.HTTP_200_OK, response_model=UserPublic)
-async def read_all_users(current_user: Annotated[UserPrivate,
-                                                    Security(authorize_user, 
-                                                    scopes=["user:read"])]) -> list[UserPublic] | None:
-    response: list[UserPublic] | None = await controller.read_all(current_user=current_user)
-    return response
+
 
 @router.patch('/{id}', status_code=status.HTTP_200_OK)
 async def partial_update_user(id: UUID,

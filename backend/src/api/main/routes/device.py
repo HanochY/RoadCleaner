@@ -19,19 +19,19 @@ async def create_device(new_device: Annotated[DeviceFullInput, Depends],
     response = await controller.create(current_user=current_user, data=new_device)
     return response
 
+@router.get('/all', status_code=status.HTTP_200_OK, response_model=list[DevicePublic])
+async def read_all_devices(current_user: Annotated[UserPrivate,
+                                                    Security(authorize_user, 
+                                                    scopes=["device:read"])]) -> list[DevicePublic] | None:
+    response: list[DevicePublic] | None = await controller.read_all()
+    return response
+
 @router.get('/{id}', status_code=status.HTTP_200_OK)
 async def read_device(id: UUID, 
                       current_user: Annotated[UserPrivate,
                                                     Security(authorize_user, 
                                                     scopes=["device:read"])]) -> None:
-    response: DevicePublic | None = await controller.read_by_id(current_user=current_user, id=id)
-    return response
-
-@router.get('/all', status_code=status.HTTP_200_OK, response_model=DevicePublic)
-async def read_all_devices(current_user: Annotated[UserPrivate,
-                                                    Security(authorize_user, 
-                                                    scopes=["device:read"])]) -> list[DevicePublic] | None:
-    response: list[DevicePublic] | None = await controller.read_all(current_user=current_user)
+    response: DevicePublic | None = await controller.read_by_id(id=id)
     return response
 
 @router.patch('/{id}', status_code=status.HTTP_200_OK)

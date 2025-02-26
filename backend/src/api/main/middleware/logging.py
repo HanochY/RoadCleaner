@@ -28,6 +28,7 @@ class LoggingMiddleware(BaseHTTPMiddleware):
         try:
             log = await generate_fastapi_request_log(request)
             logger.info(json.loads(log.model_dump_json()))
+            print("mid")
             response = await call_next(request)
             return response
         except Exception as e:

@@ -17,7 +17,14 @@ async def create_device_type(new_device_type: Annotated[DeviceTypeFullInput, Dep
                                                     Security(authorize_user, 
                                                     scopes=["device"])]) -> UUID | None:
     print('aaa')
-    response = await controller.create(current_user=current_user, data=new_device_type)
+    response: UUID = await controller.create(current_user=current_user, data=new_device_type)
+    return response
+
+@router.get('/all', status_code=status.HTTP_200_OK, response_model=list[DeviceTypePublic])
+async def read_all_device_types(current_user: Annotated[UserPrivate,
+                                                    Security(authorize_user, 
+                                                    scopes=["device_type:read"])]) -> list[DeviceTypePublic] | None:
+    response: list[DeviceTypePublic] | None = await controller.read_all()
     return response
 
 @router.get('/{id}', status_code=status.HTTP_200_OK)
@@ -25,14 +32,7 @@ async def read_device_type(id: UUID,
                            current_user: Annotated[UserPrivate,
                                                     Security(authorize_user, 
                                                     scopes=["device_type:read"])]) -> None:
-    response: DeviceTypePublic | None = await controller.read_by_id(current_user=current_user, id=id)
-    return response
-
-@router.get('/all', status_code=status.HTTP_200_OK, response_model=DeviceTypePublic)
-async def read_all_device_types(current_user: Annotated[UserPrivate,
-                                                    Security(authorize_user, 
-                                                    scopes=["device_type:read"])]) -> list[DeviceTypePublic] | None:
-    response: list[DeviceTypePublic] | None = await controller.read_all(current_user=current_user)
+    response: DeviceTypePublic | None = await controller.read_by_id(id=id)
     return response
 
 @router.patch('/{id}', status_code=status.HTTP_200_OK)

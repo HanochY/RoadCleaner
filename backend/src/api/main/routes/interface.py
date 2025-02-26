@@ -19,19 +19,21 @@ async def create_interface(new_interface: Annotated[InterfaceFullInput, Depends]
     response = await controller.create(current_user=current_user, data=new_interface)
     return response
 
+@router.get('/all', status_code=status.HTTP_200_OK, response_model=list[InterfacePublic])
+async def read_all_interfaces(current_user: Annotated[UserPrivate,
+                                                    Security(authorize_user, 
+                                                    scopes=["interface:read"])]) -> list[InterfacePublic] | None:
+    response: list[InterfacePublic] | None = await controller.read_all()
+    return response
+
+
+
 @router.get('/{id}', status_code=status.HTTP_200_OK)
 async def read_interface(id: UUID, 
                          current_user: Annotated[UserPrivate,
                                                     Security(authorize_user, 
                                                     scopes=["interface:read"])]) -> None:
-    response: InterfacePublic | None = await controller.read_by_id(current_user=current_user, id=id)
-    return response
-
-@router.get('/all', status_code=status.HTTP_200_OK, response_model=InterfacePublic)
-async def read_all_interfaces(current_user: Annotated[UserPrivate,
-                                                    Security(authorize_user, 
-                                                    scopes=["interface:read"])]) -> list[InterfacePublic] | None:
-    response: list[InterfacePublic] | None = await controller.read_all(current_user=current_user)
+    response: InterfacePublic | None = await controller.read_by_id(id=id)
     return response
 
 @router.patch('/{id}', status_code=status.HTTP_200_OK)

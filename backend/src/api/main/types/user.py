@@ -9,7 +9,6 @@ class UserPublic(BaseModel, GenericPublic):
     admin: bool
     
 class UserPrivate(Metadata, GenericPrivate):
-    #is_deleted: bool
     id: UUID
     name: str
     password: str

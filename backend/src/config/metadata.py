@@ -6,7 +6,7 @@ class Metadata(BaseSettings):
                                       env_prefix='METADATA_',
                                       env_ignore_empty=True,
                                       extra="ignore")
-    NAME: str = "WeCluck"
-    DESCRIPTION: str = "Chicken-based per-topic forum."
+    NAME: str = "name"
+    DESCRIPTION: str = "desc"
     AUTHOR: str = "Hanoch Y"
     VERSION: str = "1.0.0"

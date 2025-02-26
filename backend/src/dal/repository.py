@@ -12,8 +12,9 @@ class SQLAlchemyRepository():
         self.Model = Model
         
     async def create(self, session: AsyncSession, author_id: UUID, **data) -> Common:
-        print(self.Model)
+        print(data)
         entity = self.Model(**data)
+        print('model made')
         entity.created_at = datetime.now()
         entity.created_by = author_id
         entity.modified_at = datetime.now()

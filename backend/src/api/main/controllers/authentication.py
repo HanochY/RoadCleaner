@@ -17,7 +17,7 @@ class AuthenticationController:
     
     repository = SQLAlchemyRepository(Model=UserModel)
     
-    async def find_user_by_username(self, username: str, session: AsyncSession) -> UserModel | tuple[UserModel]:
+    async def find_user_by_username(self, username: str, session: AsyncSession) -> UserModel:
         user: UserModel = (await self.repository.read(session=session, filter=UserModel.name == username))[0]
         return user or None
 

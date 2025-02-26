@@ -170,3 +170,33 @@ deleted_by
 [SQL: INSERT INTO device_type (id, name, is_deleted, created_at, created_by, modified_at, modified_by, deleted_at, deleted_by) VALUES ($1::UUID, $2::VARCHAR, $3::BOOLEAN, $4::TIMESTAMP WITHOUT TIME ZONE, $5::UUID, $6::TIMESTAMP WITHOUT TIME ZONE, $7::UUID, $8::TIMESTAMP WITHOUT TIME ZONE, $9::UUID)]
 [parameters: (UUID('7cea0965-162e-4682-bee6-09e7532b5582'), 'company1', False, datetime.datetime(2025, 2, 19, 20, 26, 9, 799842), 0, datetime.datetime(2025, 2, 19, 20, 26, 9, 799842), 0, None, UUID('d73db861-01bc-4152-aa77-f50723548b52'))]
 (Background on this error at: https://sqlalche.me/e/20/dbapi)
+[ERROR] - 2025-02-20 15:08:13,385 - root - 0263b3e1-3d7d-4fec-b640-b2f7a5f92d9d cannot access local variable 'data' where it is not associated with a value
+[ERROR] - 2025-02-20 15:40:14,939 - root - ae0e861b-c052-455f-8ae1-948a610009c9 badly formed hexadecimal UUID string
+[ERROR] - 2025-02-20 16:40:53,411 - root - 753fd799-c09f-49fa-88d9-ad22dfd2a3d8 BaseModel.__init__() takes 1 positional argument but 2 were given
+[ERROR] - 2025-02-20 16:41:53,247 - root - cc445194-e04d-422b-8b52-1cab9ea86516 DeviceTypeController.read_all() missing 1 required positional argument: 'current_user'
+[ERROR] - 2025-02-20 16:43:01,023 - root - a259e8cf-7877-4543-b25b-939b9b2d0e0f BaseModel.__init__() takes 1 positional argument but 2 were given
+[ERROR] - 2025-02-20 16:44:49,959 - root - a259e8cf-7877-4543-b25b-939b9b2d0e0f BaseModel.__init__() takes 1 positional argument but 2 were given
+[ERROR] - 2025-02-20 16:44:56,299 - root - 0004852e-645d-46f7-8773-38d984403a16 api.main.types.device_type.DeviceTypePublic() argument after ** must be a mapping, not DeviceType
+[ERROR] - 2025-02-20 16:45:23,834 - root - dd6d5707-8c51-41fb-839f-38e1ae0bc8af 1 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': [DeviceTypePublic(id=UUID('678d958c-dee9-4034-a53b-2f0942a84e09'), name='company1'), DeviceTypePublic(id=UUID('d286ad38-4200-466f-b80a-b493cd193cbc'), name='company2')], 'url': 'https://errors.pydantic.dev/2.7/v/model_attributes_type'}
+
+[ERROR] - 2025-02-24 15:16:38,827 - root - 26c022db-0c80-4560-b1b4-8fad759a83d1 UserController.read_all() got an unexpected keyword argument 'current_user'
+[ERROR] - 2025-02-24 15:24:54,425 - root - 26c022db-0c80-4560-b1b4-8fad759a83d1 UserController.read_all() got an unexpected keyword argument 'current_user'
+[ERROR] - 2025-02-24 15:25:01,162 - root - 47a147eb-242f-4f35-9100-25178dddd20c 1 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': [UserPublic(id=UUID('601b0a97-d216-426a-806a-1841a12f303a'), name='hanoch2', admin=True), UserPublic(id=UUID('3997276c-7da6-4e09-ae86-1851a35276a5'), name='hanoch', admin=True), UserPublic(id=UUID('62e78253-1c3b-4bcd-a58e-aaf47cb3a347'), name='hanoch', admin=True), UserPublic(id=UUID('02e7dcc0-18bc-45a1-8c6c-bead011954da'), name='hanoch', admin=True), UserPublic(id=UUID('e4f28c0a-568e-4866-815a-ae4083488625'), name='hanoch2', admin=True), UserPublic(id=UUID('7cd8db19-2862-402b-96e1-3d25e3222ca1'), name='hanoch212', admin=True)], 'url': 'https://errors.pydantic.dev/2.7/v/model_attributes_type'}
+
+[ERROR] - 2025-02-24 15:27:19,631 - root - 47a147eb-242f-4f35-9100-25178dddd20c 1 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': [UserPublic(id=UUID('601b0a97-d216-426a-806a-1841a12f303a'), name='hanoch2', admin=True), UserPublic(id=UUID('3997276c-7da6-4e09-ae86-1851a35276a5'), name='hanoch', admin=True), UserPublic(id=UUID('62e78253-1c3b-4bcd-a58e-aaf47cb3a347'), name='hanoch', admin=True), UserPublic(id=UUID('02e7dcc0-18bc-45a1-8c6c-bead011954da'), name='hanoch', admin=True), UserPublic(id=UUID('e4f28c0a-568e-4866-815a-ae4083488625'), name='hanoch2', admin=True), UserPublic(id=UUID('7cd8db19-2862-402b-96e1-3d25e3222ca1'), name='hanoch212', admin=True)], 'url': 'https://errors.pydantic.dev/2.7/v/model_attributes_type'}
+
+[ERROR] - 2025-02-24 15:36:41,149 - root - 016b2157-a6c9-463a-9c4f-4a62be944009 SiteController.read_all() got an unexpected keyword argument 'current_user'
+[ERROR] - 2025-02-24 15:37:02,252 - root - a9d5f25f-44bd-4015-a724-e45038c27928 Column expression, FROM clause, or other columns clause element expected, got type[dal.models.site.Site].
+[ERROR] - 2025-02-24 15:38:14,287 - root - 20521625-ddb5-4f11-8509-a86d0b0dcb80 Column expression, FROM clause, or other columns clause element expected, got type[dal.models.site.Site].
+[ERROR] - 2025-02-24 15:38:37,049 - root - 5bcbcc5e-5d12-4521-b85f-7d0b6a26986e Column expression, FROM clause, or other columns clause element expected, got type[dal.models.site.Site].
+[ERROR] - 2025-02-26 16:26:49,640 - root - d1b9a91a-3fd3-44b0-b183-d23ed28eb61a 'UUID' object has no attribute '_sa_instance_state'
+[ERROR] - 2025-02-26 16:29:45,452 - root - 7085d7b6-6fe5-4054-bdf1-75d36e2afb7b 'UUID' object has no attribute '_sa_instance_state'
+[ERROR] - 2025-02-26 16:30:33,285 - root - 6649c139-51b2-41af-b917-e678d974278b 'UUID' object has no attribute '_sa_instance_state'
+[ERROR] - 2025-02-26 16:32:25,739 - root - 6649c139-51b2-41af-b917-e678d974278b 'UUID' object has no attribute '_sa_instance_state'
+[ERROR] - 2025-02-26 16:36:50,583 - root - 807d86ef-d894-4521-99ad-8c282317872d 'UUID' object has no attribute '_sa_instance_state'
+[ERROR] - 2025-02-26 16:38:15,433 - root - e415d795-64d5-4fcc-a051-d2bbdce5bf28 'UUID' object has no attribute '_sa_instance_state'
+[ERROR] - 2025-02-26 16:38:35,454 - root - e415d795-64d5-4fcc-a051-d2bbdce5bf28 'UUID' object has no attribute '_sa_instance_state'
+[ERROR] - 2025-02-26 16:38:58,207 - root - 2aa6fa33-9f05-4688-b17d-a46af938b57b 'UUID' object has no attribute '_sa_instance_state'

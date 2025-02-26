@@ -1,4 +1,5 @@
 from codecs import ignore_errors
+from uuid import uuid4
 from typing_extensions import Annotated
 from jwt import InvalidTokenError
 from fastapi import Depends, HTTPException, status, Security
@@ -33,22 +34,24 @@ async def get_current_user(security_scopes: SecurityScopes,
         headers={"WWW-Authenticate": authenticate_value},
     )
     try:
-        print("decpded")
         token_data: TokenData | None = decode_access_token(token)
-        print(token_data)
     except (InvalidTokenError, ValidationError):
         raise token_exception
     if not token_data.sub:
         raise token_exception
-    if not authorize_scopes(security_scopes, token_data.scopes):
+    if not await authorize_scopes(security_scopes, token_data.scopes):
         raise authorization_exception
     async for session in generate_db_session():
         user: UserModel = (await user_repository.read(filter=UserModel.id == token_data.sub, session=session))[0]
+        user = UserPrivate(**(user.__dict__))
+        print('zzzz')
+        print(user)
     print('qqq')
-    return UserPrivate(**user.__dict__)
+    return user
 
 async def authorize_user(current_user: Annotated[UserPrivate, Security(dependency=get_current_user, scopes=["self:read"])],
 ) -> UserPrivate:
+    print(current_user.is_deleted)
     if current_user.is_deleted:
         raise HTTPException(status_code=400, detail="Deleted user")
     return current_user

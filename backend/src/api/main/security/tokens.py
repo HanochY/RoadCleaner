@@ -14,19 +14,21 @@ TOKEN_TYPE_BEARER = "bearer"
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token",
                                     scopes={
                                             "device_type:read": "Read device types.",
-                                            "device_type": "CRUD device types.",
+                                            "device_type": "Create, Update and Delete device types.",
                                             "device:read": "Read devices.",
-                                            "device": "CRUD devices.",
+                                            "device": "Create, Update and Delete devices.",
                                             "interface:read": "Read interfaces.",
-                                            "interface": "CRUD interfaces.",
+                                            "interface": "Create, Update and Delete interfaces.",
                                             "site:read": "Read sites.",
-                                            "site": "CRUD sites.",
+                                            "site": "Create, Update and Delete sites.",
                                             "tunnel:read": "Read sites.",
-                                            "tunnel": "CRUD sites.",
+                                            "tunnel": "Create, Update and Delete sites.",
                                             "user:read": "Read users.",
-                                            "user": "CRUD users.",
+                                            "user": "Create, Update and Delete users.",
+                                            "task:read": "Read information about tasks.",
+                                            "task": "Create, Update and Delete tasks.",
                                             "self:read": "Read information about the current user.",
-                                            "self": "CRUD current user.",
+                                            "self": "Create, Update and Delete the current user.",
                                         }
                                     )  
 class TokenData(BaseModel):
@@ -49,11 +51,9 @@ def encode_access_token(data: TokenData) -> str:
     return(encode(data_dump, SECRET_KEY, ALGORITHM))
 
 def decode_access_token(token: str) -> TokenData | None:
-    print("aaassss")
     try:
         data = decode(token, SECRET_KEY, [ALGORITHM])
-        print(data)
-    except Exception as e:
-        print(str(e))
-    print(TokenData(sub=UUID(data['sub']), scopes=data['scopes'].split(), exp=data['exp']))
+    except Exception:
+        raise InvalidTokenError
+    print(UUID(data['sub']))
     return TokenData(sub=UUID(data['sub']), scopes=data['scopes'].split(), exp=data['exp'])
