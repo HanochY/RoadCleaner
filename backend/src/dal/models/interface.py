@@ -19,6 +19,6 @@ class Interface(Common):
     __table_args__ = (
         CheckConstraint(
             '(tunnel_core_of IS NULL OR tunnel_edge_of IS NULL)',
-            name='check_interfaces_not_both_none'
+            name='check_some_interface_is_none'
         ),
     )
