@@ -1,4 +1,5 @@
 from codecs import ignore_errors
+from typing import Sequence
 from uuid import uuid4
 from typing_extensions import Annotated
 from jwt import InvalidTokenError
@@ -10,6 +11,7 @@ from api.main.security.tokens import (
     decode_access_token,
     TokenData
 )
+from dal.models._base import Common
 from dal.models.user import User as UserModel
 from dal.repository import SQLAlchemyRepository
 from dal.db_manager import generate_db_session
@@ -42,7 +44,10 @@ async def get_current_user(security_scopes: SecurityScopes,
     if not await authorize_scopes(security_scopes, token_data.scopes):
         raise authorization_exception
     async for session in generate_db_session():
-        user: UserModel = (await user_repository.read(filter=UserModel.id == token_data.sub, session=session))[0]
+        user_results: Sequence[UserModel] = await user_repository.read(filter=UserModel.id == token_data.sub, session=session)
+        if not user_results:
+            raise authorization_exception
+        user: UserModel = user_results[0]
         user = UserPrivate(**(user.__dict__))
         print('zzzz')
         print(user)

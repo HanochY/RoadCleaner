@@ -8,6 +8,7 @@ from dal.models.site import Site
 from dal.models.tunnel._base import Tunnel
 from dal.models.tunnel.cisco import CiscoTunnel
 from dal.models.tunnel.juniper import JuniperTunnel
+from dal.models.task import Task
 from dal.models.user import User
 
 import contextlib

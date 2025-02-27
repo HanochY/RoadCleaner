@@ -29,7 +29,7 @@ class UserController(Controller[UserModel, UserFullInput, UserPartialInput, User
             raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY)
         return object.id 
     
-    async def read_by_id(self, id: UUID) -> UserPublic:
+    async def read_by_id(self, current_user: UserPrivate, id: UUID) -> UserPublic:
         async for session in generate_db_session():
             results: Sequence[UserModel] | None = await self.repository.read(filter=id==id, session=session)  
         if results: return UserPublic(**(results[0].__dict__))

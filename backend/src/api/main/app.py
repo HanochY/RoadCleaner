@@ -11,7 +11,7 @@ from api.main.routes.device_type import router as device_type_router
 from api.main.routes.device import router as device_router
 from api.main.routes.interface import router as interface_router
 from api.main.routes.site import router as site_router
-from api.main.routes.tunnels.tunnels import router as tunnel_router
+from api.main.routes.tunnels._root import router as tunnel_router
 from api.main.routes.user import router as user_router
 
 from api.main.middleware.logging import LoggingMiddleware
