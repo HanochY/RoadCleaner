@@ -7,7 +7,6 @@ from sqlalchemy.dialects.postgresql import UUID as SQL_UUID
 class Device(Common):
     __tablename__ = 'device'
 
-    id: Mapped[UUID] = mapped_column(SQL_UUID(as_uuid=True), default=uuid4, primary_key=True)
     name: Mapped[str]
     ip: Mapped[str]
     type_id: Mapped[UUID] = mapped_column(ForeignKey("device_type.id"), name="type")

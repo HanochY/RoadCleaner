@@ -35,7 +35,7 @@ class JuniperTunnelController(Controller[JuniperTunnelModel, JuniperTunnelFullIn
     async def read_all(self) -> list[JuniperTunnelPublic]:
         async for session in generate_db_session():
             results: Sequence[JuniperTunnelModel] | None = await self.repository.read(session=session)
-        if results: return [JuniperTunnelPublic(object.__dict__) for object in results]
+        if results: return [JuniperTunnelPublic(**(object.__dict__)) for object in results]
         else: raise HTTPException(status_code=status.HTTP_204_NO_CONTENT)
     
     async def update(self, current_user: UserPrivate, id: UUID, new_data: JuniperTunnelPartialInput) -> None:
@@ -56,7 +56,7 @@ class JuniperTunnelController(Controller[JuniperTunnelModel, JuniperTunnelFullIn
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
         except TypeError as e:
             raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=str(e))
-        return JuniperTunnelPublic(entity)
+        return JuniperTunnelPublic(**(entity.__dict__))
     
     async def delete(self, current_user: UserPrivate, id: UUID) -> None:
         try:
@@ -72,7 +72,7 @@ class JuniperTunnelController(Controller[JuniperTunnelModel, JuniperTunnelFullIn
                 entity = await self.repository.undelete(id=id, session=session, author_id=current_user.id)
         except NoResultFound:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
-        return JuniperTunnelPublic(entity)
+        return JuniperTunnelPublic(**(entity.__dict__))
     
     async def hard_delete(self, current_user: UserPrivate, id: UUID) -> None:
         try:

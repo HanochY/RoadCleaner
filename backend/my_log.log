@@ -242,3 +242,88 @@ admin
 [SQL: INSERT INTO "user" (id, name, password, admin, is_deleted, created_at, created_by, modified_at, modified_by, deleted_at, deleted_by) VALUES ($1::UUID, $2::VARCHAR, $3::VARCHAR, $4::BOOLEAN, $5::BOOLEAN, $6::TIMESTAMP WITHOUT TIME ZONE, $7::UUID, $8::TIMESTAMP WITHOUT TIME ZONE, $9::UUID, $10::TIMESTAMP WITHOUT TIME ZONE, $11::UUID)]
 [parameters: (UUID('1cf65878-5161-4ea0-bba7-28e68b7e57e0'), 'hanoch', '$2b$12$gbthnsWhxd6vArNLPID5JujtsxUT6VqHJNuTukA3MODP2ZGqHBojO', True, False, datetime.datetime(2025, 2, 27, 16, 57, 9, 934541), 0, datetime.datetime(2025, 2, 27, 16, 57, 9, 934541), 0, None, UUID('324c7251-9bd2-47d9-ba51-49932ad4d5ae'))]
 (Background on this error at: https://sqlalche.me/e/20/dbapi)
+[ERROR] - 2025-03-02 11:31:36,829 - root - 58753c8c-706a-436d-ad57-5d13644b15f7 'UUID' object has no attribute '_sa_instance_state'
+[ERROR] - 2025-03-02 11:34:58,939 - root - 4df64d57-8999-4d43-89a8-5c760bef2f7d 'UUID' object has no attribute '_sa_instance_state'
+[ERROR] - 2025-03-02 11:42:09,523 - root - 895d20be-954c-4511-a4f6-00a6778102f4 (sqlalchemy.dialects.postgresql.asyncpg.Error) <class 'asyncpg.exceptions.DataError'>: invalid input for query argument $3: IPv4Address('1.2.3.4') (expected str, got IPv4Address)
+[SQL: INSERT INTO device (id, name, ip, type, site, is_deleted, created_at, created_by, modified_at, modified_by, deleted_at, deleted_by) VALUES ($1::UUID, $2::VARCHAR, $3::VARCHAR, $4::UUID, $5::UUID, $6::BOOLEAN, $7::TIMESTAMP WITHOUT TIME ZONE, $8::UUID, $9::TIMESTAMP WITHOUT TIME ZONE, $10::UUID, $11::TIMESTAMP WITHOUT TIME ZONE, $12::UUID)]
+[parameters: (UUID('9191ed87-c3d6-4335-8eed-4016880c3acd'), 'device1', IPv4Address('1.2.3.4'), UUID('cc459509-b5b1-4026-b0ba-803ac221d2a6'), UUID('5c5514c6-1070-469a-8e5d-0ce38a9ebadd'), False, datetime.datetime(2025, 3, 2, 11, 42, 9, 520151), UUID('51e1ca67-6cb1-467c-b22b-02d72d11473b'), datetime.datetime(2025, 3, 2, 11, 42, 9, 520151), UUID('51e1ca67-6cb1-467c-b22b-02d72d11473b'), None, UUID('21359017-799a-4357-87c0-c8c3b3cbd81e'))]
+(Background on this error at: https://sqlalche.me/e/20/dbapi)
+[ERROR] - 2025-03-03 10:42:50,999 - root - 8167bdc3-8107-4915-a6bc-2367dac24b97 (sqlalchemy.dialects.postgresql.asyncpg.IntegrityError) <class 'asyncpg.exceptions.ForeignKeyViolationError'>: insert or update on table "device" violates foreign key constraint "device_type_fkey"
+DETAIL:  Key (type)=(cc459509-b5b1-4026-b0ba-803ac221d2a6) is not present in table "device_type".
+[SQL: INSERT INTO device (id, name, ip, type, site, is_deleted, created_at, created_by, modified_at, modified_by, deleted_at, deleted_by) VALUES ($1::UUID, $2::VARCHAR, $3::VARCHAR, $4::UUID, $5::UUID, $6::BOOLEAN, $7::TIMESTAMP WITHOUT TIME ZONE, $8::UUID, $9::TIMESTAMP WITHOUT TIME ZONE, $10::UUID, $11::TIMESTAMP WITHOUT TIME ZONE, $12::UUID)]
+[parameters: (UUID('68856523-5583-4b31-ad6b-0b5edd155860'), 'device1', '1.2.3.4', UUID('cc459509-b5b1-4026-b0ba-803ac221d2a6'), UUID('5c5514c6-1070-469a-8e5d-0ce38a9ebadd'), False, datetime.datetime(2025, 3, 3, 10, 42, 50, 991729), UUID('51e1ca67-6cb1-467c-b22b-02d72d11473b'), datetime.datetime(2025, 3, 3, 10, 42, 50, 991729), UUID('51e1ca67-6cb1-467c-b22b-02d72d11473b'), None, UUID('8bf4dd7d-0534-4639-81ee-b3b1927707c2'))]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+[ERROR] - 2025-03-03 11:49:42,121 - root - 1979bea5-4473-4ae7-a347-f1487b2ff483 (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: column "tunnel" of relation "interface" does not exist
+[SQL: INSERT INTO interface (id, name, ip, device, tunnel, is_deleted, created_at, created_by, modified_at, modified_by, deleted_at, deleted_by) VALUES ($1::UUID, $2::VARCHAR, $3::VARCHAR, $4::UUID, $5::UUID, $6::BOOLEAN, $7::TIMESTAMP WITHOUT TIME ZONE, $8::UUID, $9::TIMESTAMP WITHOUT TIME ZONE, $10::UUID, $11::TIMESTAMP WITHOUT TIME ZONE, $12::UUID)]
+[parameters: (UUID('c81c7276-2ff6-49d2-ac67-422ab6c5fbdd'), 'int1', '198.51.100.1', UUID('75078c57-f9f7-498c-aff1-4529077b27c4'), None, False, datetime.datetime(2025, 3, 3, 11, 49, 42, 116205), UUID('51e1ca67-6cb1-467c-b22b-02d72d11473b'), datetime.datetime(2025, 3, 3, 11, 49, 42, 116205), UUID('51e1ca67-6cb1-467c-b22b-02d72d11473b'), None, None)]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+[ERROR] - 2025-03-03 12:27:02,753 - root - 55d74809-e9fb-4a23-8398-1b09de7729b6 (sqlalchemy.dialects.postgresql.asyncpg.IntegrityError) <class 'asyncpg.exceptions.ForeignKeyViolationError'>: insert or update on table "tunnel" violates foreign key constraint "tunnel_interface_edge_fkey"
+DETAIL:  Key (interface_edge)=(cba8b16a-8641-42d3-8706-1540a4ef293c) is not present in table "interface".
+[SQL: INSERT INTO tunnel (id, name, interface_core, interface_edge, reinforced_at, reinforced_by, vendor, is_deleted, created_at, created_by, modified_at, modified_by, deleted_at, deleted_by) VALUES ($1::UUID, $2::VARCHAR, $3::UUID, $4::UUID, $5::TIMESTAMP WITHOUT TIME ZONE, $6::VARCHAR, $7::VARCHAR, $8::BOOLEAN, $9::TIMESTAMP WITHOUT TIME ZONE, $10::UUID, $11::TIMESTAMP WITHOUT TIME ZONE, $12::UUID, $13::TIMESTAMP WITHOUT TIME ZONE, $14::UUID)]
+[parameters: (UUID('46296103-f092-4640-bfdf-5a008f65cf66'), 'string', UUID('533e8493-3400-47d4-aaa6-c6fa045a0036'), UUID('cba8b16a-8641-42d3-8706-1540a4ef293c'), None, None, 'tunnel_juniper', False, datetime.datetime(2025, 3, 3, 12, 27, 2, 746352), UUID('1e777a72-d1c7-45fb-9375-e0562e4eb586'), datetime.datetime(2025, 3, 3, 12, 27, 2, 746352), UUID('1e777a72-d1c7-45fb-9375-e0562e4eb586'), None, None)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+[ERROR] - 2025-03-03 14:09:38,917 - root - be73c354-0d85-4175-9e2e-972d4e65578a (sqlalchemy.dialects.postgresql.asyncpg.IntegrityError) <class 'asyncpg.exceptions.ForeignKeyViolationError'>: insert or update on table "tunnel" violates foreign key constraint "tunnel_interface_edge_fkey"
+DETAIL:  Key (interface_edge)=(ceaa2cac-b177-488b-a452-33be990ce203) is not present in table "interface".
+[SQL: INSERT INTO tunnel (id, name, interface_core, interface_edge, reinforced_at, reinforced_by, vendor, is_deleted, created_at, created_by, modified_at, modified_by, deleted_at, deleted_by) VALUES ($1::UUID, $2::VARCHAR, $3::UUID, $4::UUID, $5::TIMESTAMP WITHOUT TIME ZONE, $6::VARCHAR, $7::VARCHAR, $8::BOOLEAN, $9::TIMESTAMP WITHOUT TIME ZONE, $10::UUID, $11::TIMESTAMP WITHOUT TIME ZONE, $12::UUID, $13::TIMESTAMP WITHOUT TIME ZONE, $14::UUID)]
+[parameters: (UUID('443c81fe-7f27-4770-9192-b51699b50b32'), 'string', UUID('533e8493-3400-47d4-aaa6-c6fa045a0036'), UUID('ceaa2cac-b177-488b-a452-33be990ce203'), None, None, 'tunnel_juniper', False, datetime.datetime(2025, 3, 3, 14, 9, 38, 910489), UUID('1e777a72-d1c7-45fb-9375-e0562e4eb586'), datetime.datetime(2025, 3, 3, 14, 9, 38, 910489), UUID('1e777a72-d1c7-45fb-9375-e0562e4eb586'), None, None)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+[ERROR] - 2025-03-03 14:14:34,862 - root - c1db440c-1843-4e43-b9e3-7294639acf6c BaseModel.__init__() takes 1 positional argument but 2 were given
+[ERROR] - 2025-03-03 14:16:36,675 - root - c1db440c-1843-4e43-b9e3-7294639acf6c BaseModel.__init__() takes 1 positional argument but 2 were given
+[ERROR] - 2025-03-03 14:53:26,796 - root - 0d70fa30-e7d3-4cac-aa48-3ff092734b12 (sqlalchemy.dialects.postgresql.asyncpg.Error) <class 'asyncpg.exceptions.DataError'>: invalid input for query argument $1: <built-in function id> ('builtin_function_or_method' object has no attribute 'bytes')
+[SQL: SELECT device.id, device.name, device.ip, device.type, device.site, device.is_deleted, device.created_at, device.created_by, device.modified_at, device.modified_by, device.deleted_at, device.deleted_by 
+FROM device 
+WHERE device.id = $1::UUID]
+[parameters: (<built-in function id>,)]
+(Background on this error at: https://sqlalche.me/e/20/dbapi)
+[ERROR] - 2025-03-03 14:59:13,366 - root - 0d70fa30-e7d3-4cac-aa48-3ff092734b12 (sqlalchemy.dialects.postgresql.asyncpg.Error) <class 'asyncpg.exceptions.DataError'>: invalid input for query argument $1: <built-in function id> ('builtin_function_or_method' object has no attribute 'bytes')
+[SQL: SELECT device.id, device.name, device.ip, device.type, device.site, device.is_deleted, device.created_at, device.created_by, device.modified_at, device.modified_by, device.deleted_at, device.deleted_by 
+FROM device 
+WHERE device.id = $1::UUID]
+[parameters: (<built-in function id>,)]
+(Background on this error at: https://sqlalche.me/e/20/dbapi)
+[ERROR] - 2025-03-03 14:59:47,622 - root - 0d70fa30-e7d3-4cac-aa48-3ff092734b12 (sqlalchemy.dialects.postgresql.asyncpg.Error) <class 'asyncpg.exceptions.DataError'>: invalid input for query argument $1: <built-in function id> ('builtin_function_or_method' object has no attribute 'bytes')
+[SQL: SELECT device.id, device.name, device.ip, device.type, device.site, device.is_deleted, device.created_at, device.created_by, device.modified_at, device.modified_by, device.deleted_at, device.deleted_by 
+FROM device 
+WHERE device.id = $1::UUID]
+[parameters: (<built-in function id>,)]
+(Background on this error at: https://sqlalche.me/e/20/dbapi)
+[ERROR] - 2025-03-03 15:01:45,439 - root - 41e21f71-7825-43ab-8c82-279714aff855 object of type 'UUID' has no len()
+[ERROR] - 2025-03-03 15:02:13,808 - root - 41e21f71-7825-43ab-8c82-279714aff855 object of type 'UUID' has no len()
+[ERROR] - 2025-03-03 15:03:25,729 - root - 797a79b9-916d-42bd-9a23-631500c9d01a object of type 'UUID' has no len()
+[ERROR] - 2025-03-03 15:05:05,170 - root - 797a79b9-916d-42bd-9a23-631500c9d01a object of type 'UUID' has no len()
+[ERROR] - 2025-03-03 15:05:10,737 - root - 3af42a4b-c67d-40af-b6f9-e7c5d0e7a9cc (sqlalchemy.dialects.postgresql.asyncpg.Error) <class 'asyncpg.exceptions.DataError'>: invalid input for query argument $1: <built-in function id> ('builtin_function_or_method' object has no attribute 'bytes')
+[SQL: SELECT device.id, device.name, device.ip, device.type, device.site, device.is_deleted, device.created_at, device.created_by, device.modified_at, device.modified_by, device.deleted_at, device.deleted_by 
+FROM device 
+WHERE device.id = $1::UUID]
+[parameters: (<built-in function id>,)]
+(Background on this error at: https://sqlalche.me/e/20/dbapi)
+[ERROR] - 2025-03-03 15:08:51,513 - root - 6b74725f-be7b-42db-8595-bcc191c18b17 (sqlalchemy.dialects.postgresql.asyncpg.Error) <class 'asyncpg.exceptions.DataError'>: invalid input for query argument $1: <built-in function id> ('builtin_function_or_method' object has no attribute 'bytes')
+[SQL: SELECT device.id, device.name, device.ip, device.type, device.site, device.is_deleted, device.created_at, device.created_by, device.modified_at, device.modified_by, device.deleted_at, device.deleted_by 
+FROM device 
+WHERE device.id = $1::UUID]
+[parameters: (<built-in function id>,)]
+(Background on this error at: https://sqlalche.me/e/20/dbapi)
+[ERROR] - 2025-03-03 15:10:50,069 - root - 6b74725f-be7b-42db-8595-bcc191c18b17 (sqlalchemy.dialects.postgresql.asyncpg.Error) <class 'asyncpg.exceptions.DataError'>: invalid input for query argument $1: <built-in function id> ('builtin_function_or_method' object has no attribute 'bytes')
+[SQL: SELECT device.id, device.name, device.ip, device.type, device.site, device.is_deleted, device.created_at, device.created_by, device.modified_at, device.modified_by, device.deleted_at, device.deleted_by 
+FROM device 
+WHERE device.id = $1::UUID]
+[parameters: (<built-in function id>,)]
+(Background on this error at: https://sqlalche.me/e/20/dbapi)
+[ERROR] - 2025-03-03 15:10:54,305 - root - 33b105a0-bcc3-4e6b-b883-d8c9565653a5 BaseModel.__init__() takes 1 positional argument but 2 were given
+[ERROR] - 2025-03-03 15:12:11,830 - root - 33b105a0-bcc3-4e6b-b883-d8c9565653a5 BaseModel.__init__() takes 1 positional argument but 2 were given
+[ERROR] - 2025-03-03 15:12:15,677 - root - 207765f1-a589-46f3-92c5-ab84d6e51bae 2 validation errors for DevicePublic
+type_id
+  UUID input should be a string, bytes or UUID object [type=uuid_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.7/v/uuid_type
+site_id
+  UUID input should be a string, bytes or UUID object [type=uuid_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.7/v/uuid_type
+[ERROR] - 2025-03-03 15:16:03,488 - root - a38b20a6-ab21-4706-86b4-a92069712e85 2 validation errors for DevicePublic
+type_id
+  UUID input should be a string, bytes or UUID object [type=uuid_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.7/v/uuid_type
+site_id
+  UUID input should be a string, bytes or UUID object [type=uuid_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.7/v/uuid_type
+[ERROR] - 2025-03-03 15:44:54,663 - root - 32f6bb88-d2a8-4ae3-a4d1-035fa0571fb7 Instance '<Device at 0x279c2d39690>' is not persistent within this Session
+[ERROR] - 2025-03-03 15:47:21,266 - root - 2054959b-a6fe-4109-9732-86e94cf0e205 Instance '<Device at 0x21f72845550>' is not persistent within this Session

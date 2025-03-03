@@ -8,5 +8,5 @@ class Metadata(BaseModel):
     created_by: UUID
     modified_at: datetime
     modified_by: UUID
-    deleted_at: datetime | None
-    deleted_by: UUID | None
+    deleted_at: datetime | None = None
+    deleted_by: UUID | None = None

@@ -21,13 +21,13 @@ class UserController(Controller[UserModel, UserFullInput, UserPartialInput, User
         try:
             async for session in generate_db_session():
                 data.password = hash_password(data.password)
-                object: UserModel = await self.repository.create(session=session, author_id=current_user.id, **(data.model_dump()))
+                entity: UserModel = await self.repository.create(session=session, author_id=current_user.id, **(data.model_dump()))
                 await session.commit()
-                await session.refresh(object)
+                await session.refresh(entity)
         except TypeError as e:
             print(e)
             raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY)
-        return object.id 
+        return entity.id 
     
     async def read_by_id(self, current_user: UserPrivate, id: UUID) -> UserPublic:
         async for session in generate_db_session():
@@ -39,13 +39,14 @@ class UserController(Controller[UserModel, UserFullInput, UserPartialInput, User
         async for session in generate_db_session():
             print('ttt')
             results: Sequence[UserModel] | None = await self.repository.read(session=session)
-        if results: return [UserPublic(**(object.__dict__)) for object in results]
+        if results: return [UserPublic(**(entity.__dict__)) for entity in results]
         else: raise HTTPException(status_code=status.HTTP_204_NO_CONTENT)
     
     async def update(self, current_user: UserPrivate, id: UUID, new_data: UserPartialInput) -> None:
         try:
             async for session in generate_db_session():
                 await self.repository.update(id=id, session=session, author_id=current_user.id, **(new_data.model_dump()))
+                await session.commit()
         except NoResultFound:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
         except TypeError as e:
@@ -56,16 +57,19 @@ class UserController(Controller[UserModel, UserFullInput, UserPartialInput, User
         try:
             async for session in generate_db_session():
                 entity = await self.repository.update(id=id, session=session, author_id=current_user.id, **(new_data.model_dump()))
+                await session.commit()
+                await session.refresh(entity)
         except NoResultFound:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
         except TypeError as e:
             raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=str(e))
-        return UserPublic(entity)
+        return UserPublic(**(entity.__dict__))
     
     async def delete(self, current_user: UserPrivate, id: UUID) -> None:
         try:
             async for session in generate_db_session():
                 await self.repository.delete(id=id, session=session, author_id=current_user.id)
+                await session.commit()
         except NoResultFound:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
         return None
@@ -74,14 +78,17 @@ class UserController(Controller[UserModel, UserFullInput, UserPartialInput, User
         try:
             async for session in generate_db_session():
                 entity = await self.repository.undelete(id=id, session=session, author_id=current_user.id)
+                await session.commit()
+                await session.refresh(entity)
         except NoResultFound:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
-        return UserPublic(entity)
+        return UserPublic(**(entity.__dict__))
     
     async def hard_delete(self, current_user: UserPrivate, id: UUID) -> None:
         try:
             async for session in generate_db_session():
                 await self.repository.hard_delete(id=id, session=session, author_id=current_user.id)
+                await session.commit()
         except NoResultFound:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
         return None

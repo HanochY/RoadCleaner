@@ -10,7 +10,7 @@ class TaskPublic(BaseModel, GenericPublic):
     subject: UUID
     details: str
     start_time: datetime
-    end_time: datetime | None
+    end_time: datetime | None = None
     
 class TaskPrivate(Metadata, GenericPrivate):
     id: UUID
@@ -18,20 +18,17 @@ class TaskPrivate(Metadata, GenericPrivate):
     subject: UUID
     details: str
     start_time: datetime
-    end_time: datetime | None
+    end_time: datetime | None = None
     
 class TaskFullInput(BaseModel, GenericFullInput):
     id: UUID
     name: str
     subject: UUID
     details: str
-    start_time: datetime
-    end_time: datetime | None
+
 
 class TaskPartialInput(BaseModel, GenericPartialInput):
-    id: UUID | None
-    name: str | None
-    subject: UUID | None
-    details: str | None
-    start_time: datetime | None
-    end_time: datetime | None
+    id: UUID | None = None
+    name: str | None = None
+    subject: UUID | None = None
+    details: str | None = None

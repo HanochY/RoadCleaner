@@ -19,12 +19,12 @@ class InterfaceController(Controller[InterfaceModel, InterfaceFullInput, Interfa
     async def create(self, current_user: UserPrivate, data: InterfaceFullInput) -> UUID:
         try:
             async for session in generate_db_session():
-                object: InterfaceModel = await self.repository.create(session=session, author_id=current_user.id, **(data.model_dump()))
+                entity: InterfaceModel = await self.repository.create(session=session, author_id=current_user.id, **(data.model_dump()))
                 await session.commit()
-                await session.refresh(object)
+                await session.refresh(entity)
         except TypeError as e:
             raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=str(e))
-        return object.id 
+        return entity.id 
     
     async def read_by_id(self, id: UUID) -> InterfacePublic:
         async for session in generate_db_session():
@@ -35,13 +35,14 @@ class InterfaceController(Controller[InterfaceModel, InterfaceFullInput, Interfa
     async def read_all(self) -> list[InterfacePublic]:
         async for session in generate_db_session():
             results: Sequence[InterfaceModel] | None = await self.repository.read(session=session)
-        if results: return [InterfacePublic(**(object.__dict__)) for object in results]
+        if results: return [InterfacePublic(**(entity.__dict__)) for entity in results]
         else: raise HTTPException(status_code=status.HTTP_204_NO_CONTENT)
     
     async def update(self, current_user: UserPrivate, id: UUID, new_data: InterfacePartialInput) -> None:
         try:
             async for session in generate_db_session():
                 await self.repository.update(id=id, session=session, author_id=current_user.id, **(new_data.model_dump()))
+                await session.commit()
         except NoResultFound:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
         except TypeError as e:
@@ -52,16 +53,19 @@ class InterfaceController(Controller[InterfaceModel, InterfaceFullInput, Interfa
         try:
             async for session in generate_db_session():
                 entity = await self.repository.update(id=id, session=session, author_id=current_user.id, **(new_data.model_dump()))
+                await session.commit()
+                await session.refresh(entity)
         except NoResultFound:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
         except TypeError as e:
-            raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=str(e))
-        return InterfacePublic(entity)
+            raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=str(e))            
+        return InterfacePublic(**(entity.__dict__))
     
     async def delete(self, current_user: UserPrivate, id: UUID) -> None:
         try:
             async for session in generate_db_session():
                 await self.repository.delete(id=id, session=session, author_id=current_user.id)
+                await session.commit()
         except NoResultFound:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
         return None
@@ -70,14 +74,17 @@ class InterfaceController(Controller[InterfaceModel, InterfaceFullInput, Interfa
         try:
             async for session in generate_db_session():
                 entity = await self.repository.undelete(id=id, session=session, author_id=current_user.id)
+                await session.commit()
+                await session.refresh(entity)
         except NoResultFound:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
-        return InterfacePublic(entity)
+        return InterfacePublic(**(entity.__dict__))
     
     async def hard_delete(self, current_user: UserPrivate, id: UUID) -> None:
         try:
             async for session in generate_db_session():
                 await self.repository.hard_delete(id=id, session=session, author_id=current_user.id)
+                await session.commit()
         except NoResultFound:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
         return None

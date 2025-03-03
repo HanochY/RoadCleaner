@@ -12,7 +12,7 @@ class SQLAlchemyRepository():
         self.Model = Model
         
     async def create(self, session: AsyncSession, author_id: UUID, **data) -> Common:
-        print(data)
+        print("started creation")
         entity = self.Model(**data)
         print('model made')
         entity.created_at = datetime.now()
@@ -39,18 +39,19 @@ class SQLAlchemyRepository():
         entities = await session.execute(statement)
         return entities.scalars().all()
     
-    async def update(self, session: AsyncSession, author_id: UUID, **new_data) -> Common:
+    async def update(self, id: UUID, session: AsyncSession, author_id: UUID, **new_data) -> Common:
         statement = select(self.Model).where(self.Model.id == id)
         result = await session.execute(statement)
         entity: Common = result.scalars().one()
         for attribute, value in new_data.items():
-            setattr(entity, attribute, value)
+            if value:            
+                setattr(entity, attribute, value)
         entity.modified_at = datetime.now()
         entity.modified_by = author_id
         session.add(entity)
         return entity
 
-    async def delete(self, session: AsyncSession, author_id: UUID, id: UUID) -> Common:
+    async def delete(self, id: UUID, session: AsyncSession, author_id: UUID) -> Common:
         statement = select(self.Model).where(self.Model.id == id)
         result = await session.execute(statement)
         entity = result.scalars().one()

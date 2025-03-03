@@ -35,7 +35,7 @@ class CiscoTunnelController(Controller[CiscoTunnelModel, CiscoTunnelFullInput, C
     async def read_all(self) -> list[CiscoTunnelPublic]:
         async for session in generate_db_session():
             results: Sequence[CiscoTunnelModel] | None = await self.repository.read(session=session)
-        if results: return [CiscoTunnelPublic(object.__dict__) for object in results]
+        if results: return [CiscoTunnelPublic(**(object.__dict__)) for object in results]
         else: raise HTTPException(status_code=status.HTTP_204_NO_CONTENT)
     
     async def update(self, current_user: UserPrivate, id: UUID, new_data: CiscoTunnelPartialInput) -> None:
@@ -56,7 +56,7 @@ class CiscoTunnelController(Controller[CiscoTunnelModel, CiscoTunnelFullInput, C
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
         except TypeError as e:
             raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=str(e))
-        return CiscoTunnelPublic(entity)
+        return CiscoTunnelPublic(**(entity.__dict__))
     
     async def delete(self, current_user: UserPrivate, id: UUID) -> None:
         try:
@@ -72,7 +72,7 @@ class CiscoTunnelController(Controller[CiscoTunnelModel, CiscoTunnelFullInput, C
                 entity = await self.repository.undelete(id=id, session=session, author_id=current_user.id)
         except NoResultFound:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
-        return CiscoTunnelPublic(entity)
+        return CiscoTunnelPublic(**(entity.__dict__))
     
     async def hard_delete(self, current_user: UserPrivate, id: UUID) -> None:
         try:

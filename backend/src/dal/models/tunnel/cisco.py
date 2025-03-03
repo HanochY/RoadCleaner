@@ -4,7 +4,7 @@ from sqlalchemy import ForeignKey
 from uuid import UUID
 
 class CiscoTunnel(Tunnel):
-    __tablename__ = 'cisco_tunnel_details'
+    __tablename__ = 'tunnel_details_cisco'
     
     id: Mapped[UUID] = mapped_column(ForeignKey("tunnel.id"), primary_key=True)
     keychain_core: Mapped[str]
@@ -12,5 +12,5 @@ class CiscoTunnel(Tunnel):
     key_name_core: Mapped[str]
     key_name_edge: Mapped[str]
     __mapper_args__ = {
-        'polymorphic_identity': 'cisco_tunnel'
+        'polymorphic_identity': 'tunnel_cisco'
     }

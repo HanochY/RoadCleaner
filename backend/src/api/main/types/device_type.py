@@ -15,4 +15,4 @@ class DeviceTypeFullInput(BaseModel, GenericFullInput):
     name: str
 
 class DeviceTypePartialInput(BaseModel, GenericPartialInput):
-    name: str | None
+    name: str | None = None

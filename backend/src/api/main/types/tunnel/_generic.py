@@ -9,28 +9,24 @@ class TunnelPublic(BaseModel, GenericPublic):
     name: str
     interface_core_id: UUID 
     interface_edge_id: UUID 
-    reinforced_at: datetime | None 
-    reinforced_by: str | None 
+    reinforced_at: datetime | None = None
+    reinforced_by: str | None = None
     
 class TunnelPrivate(Metadata, GenericPrivate):
     id: UUID
     name: str
     interface_core_id: UUID 
     interface_edge_id: UUID 
-    reinforced_at: datetime | None 
-    reinforced_by: str | None 
+    reinforced_at: datetime | None = None
+    reinforced_by: str | None = None
     
 class TunnelFullInput(BaseModel, GenericFullInput):
     name: str
     interface_core_id: UUID 
     interface_edge_id: UUID 
-    reinforced_at: datetime | None 
-    reinforced_by: str | None
-    
+
 class TunnelPartialInput(BaseModel, GenericPartialInput):
-    id: UUID | None 
-    name: str | None 
-    interface_core_id: UUID | None 
-    interface_edge_id: UUID | None 
-    reinforced_at: datetime | None 
-    reinforced_by: str | None 
+    id: UUID | None = None
+    name: str | None = None
+    interface_core_id: UUID | None = None
+    interface_edge_id: UUID | None = None

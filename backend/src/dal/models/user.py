@@ -6,7 +6,6 @@ from sqlalchemy.dialects.postgresql import UUID as SQL_UUID
 class User(Common):
     __tablename__ = 'user'
     
-    id: Mapped[UUID] = mapped_column(SQL_UUID(as_uuid=True), default=uuid4, primary_key=True)
     name: Mapped[str]
     password: Mapped[str]
     admin: Mapped[bool]

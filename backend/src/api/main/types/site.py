@@ -15,4 +15,4 @@ class SiteFullInput(BaseModel, GenericFullInput):
     name: str
 
 class SitePartialInput(BaseModel, GenericPartialInput):
-    name: str | None
+    name: str | None = None

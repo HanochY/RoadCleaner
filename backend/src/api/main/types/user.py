@@ -20,6 +20,6 @@ class UserFullInput(BaseModel, GenericFullInput):
     admin: bool
     
 class UserPartialInput(BaseModel, GenericPartialInput):
-    name: str | None
-    password: str | None
-    admin: bool | None
+    name: str | None = None
+    password: str | None = None
+    admin: bool | None = None

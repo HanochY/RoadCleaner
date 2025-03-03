@@ -1,12 +1,8 @@
-import logging.config
 import uvicorn
-import json
-import logging
 from config.provider import ConfigProvider
 from utils.enums.environments import Environment
 
 def run_server():
-    print('a')
     main_settings = ConfigProvider.main_app_settings()
     uvicorn.run(
         "api.main.app:app",

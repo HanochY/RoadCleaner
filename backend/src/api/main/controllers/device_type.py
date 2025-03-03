@@ -20,13 +20,13 @@ class DeviceTypeController(Controller[DeviceTypeModel, DeviceTypeFullInput, Devi
         try:
             print(data.model_dump())
             async for session in generate_db_session():
-                object: DeviceTypeModel = await self.repository.create(session=session, author_id=current_user.id, **(data.model_dump()))
+                entity: DeviceTypeModel = await self.repository.create(session=session, author_id=current_user.id, **(data.model_dump()))
                 await session.commit()
-                await session.refresh(object)
+                await session.refresh(entity)
         except TypeError as e:
             print(e)
             raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY)
-        return object.id 
+        return entity.id 
     
     async def read_by_id(self, id: UUID) -> DeviceTypePublic:
         async for session in generate_db_session():
@@ -37,13 +37,14 @@ class DeviceTypeController(Controller[DeviceTypeModel, DeviceTypeFullInput, Devi
     async def read_all(self) -> list[DeviceTypePublic]:
         async for session in generate_db_session():
             results: Sequence[DeviceTypeModel] | None = await self.repository.read(session=session)
-        if results: return [DeviceTypePublic(**(object.__dict__)) for object in results]
+        if results: return [DeviceTypePublic(**(entity.__dict__)) for entity in results]
         else: raise HTTPException(status_code=status.HTTP_204_NO_CONTENT)
     
-    async def update(self, current_user: UserPrivate, id: UUID, new_data: DeviceTypePartialInput) -> None:
+    async def update(self, current_user: UserPrivate, id: UUID, new_data: DeviceTypeFullInput) -> None:
         try:
             async for session in generate_db_session():
                 await self.repository.update(id=id, session=session, author_id=current_user.id, **(new_data.model_dump()))
+                await session.commit()
         except NoResultFound:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
         except TypeError as e:
@@ -54,16 +55,19 @@ class DeviceTypeController(Controller[DeviceTypeModel, DeviceTypeFullInput, Devi
         try:
             async for session in generate_db_session():
                 entity = await self.repository.update(id=id, session=session, author_id=current_user.id, **(new_data.model_dump()))
+                await session.commit()
+                await session.refresh(entity)
         except NoResultFound:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
         except TypeError as e:
             raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=str(e))
-        return DeviceTypePublic(entity)
+        return DeviceTypePublic(**(entity.__dict__))
     
     async def delete(self, current_user: UserPrivate, id: UUID) -> None:
         try:
             async for session in generate_db_session():
                 await self.repository.delete(id=id, session=session, author_id=current_user.id)
+                await session.commit()
         except NoResultFound:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
         return None
@@ -72,14 +76,17 @@ class DeviceTypeController(Controller[DeviceTypeModel, DeviceTypeFullInput, Devi
         try:
             async for session in generate_db_session():
                 entity = await self.repository.undelete(id=id, session=session, author_id=current_user.id)
+                await session.commit()
+                await session.refresh(entity)
         except NoResultFound:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
-        return DeviceTypePublic(entity)
+        return DeviceTypePublic(**(entity.__dict__))
     
     async def hard_delete(self, current_user: UserPrivate, id: UUID) -> None:
         try:
             async for session in generate_db_session():
                 await self.repository.hard_delete(id=id, session=session, author_id=current_user.id)
+                await session.commit()
         except NoResultFound:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
         return None
