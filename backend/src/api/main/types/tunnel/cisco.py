@@ -1,6 +1,5 @@
 from api.main.types.tunnel._generic import TunnelPublic, TunnelPrivate, TunnelFullInput, TunnelPartialInput
 
-
 class CiscoTunnelPublic(TunnelPublic):
     keychain_inner: str | None = None
     keychain_outer: str | None = None

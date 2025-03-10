@@ -26,14 +26,14 @@ class SQLAlchemyRepository():
                    statement: Select[tuple[Common]]) -> Sequence[Common]:
         statement: Select[tuple[Common]] = statement.where(self.Model.is_deleted == False)
         entities: Result[tuple[Common]] = await session.execute(statement)
-        return entities.scalars().all()
+        return entities.scalars().unique().all()
     
     async def read_one(self, 
                    session: AsyncSession,
                    statement: Select[tuple[Common]]) -> Common | None:
         statement: Select[tuple[Common]] = statement.where(self.Model.is_deleted == False)
         entities: Result[tuple[Common]] = await session.execute(statement)
-        return entities.scalars().one_or_none()
+        return entities.scalars().unique().one_or_none()
     
     async def update(self, id: UUID, session: AsyncSession, author_id: UUID, **new_data) -> Common:
         statement: Select[tuple[Common]] = select(self.Model).where(self.Model.id == id)

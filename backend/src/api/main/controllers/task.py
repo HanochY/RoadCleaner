@@ -9,6 +9,7 @@ from api.main.types.task import TaskPublic, TaskFullInput, TaskPartialInput
 from api.main.types.user import UserPrivate
 from dal.models.task import Task as TaskModel
 from sqlalchemy.orm.exc import NoResultFound
+
 from sqlalchemy import select
 
 class TaskController(Controller[TaskModel, TaskFullInput, TaskPartialInput, TaskPublic]):
@@ -29,7 +30,7 @@ class TaskController(Controller[TaskModel, TaskFullInput, TaskPartialInput, Task
     
     async def read_by_id(self, id: UUID) -> TaskPublic:
         async for session in generate_db_session():
-            result: TaskModel | None = await self.repository.read_one(statement=select(TaskModel).where(TaskModel.id==id), session=session)  
+            result: TaskModel | None = await self.repository.read_one(statement=select(TaskModel).where(TaskModel.id==id), session=session)
         if result: return TaskPublic(**(result.__dict__))
         else: raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
     

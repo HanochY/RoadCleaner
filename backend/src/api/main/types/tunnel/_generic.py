@@ -1,9 +1,10 @@
 from api.main.types._generic import GenericPublic, GenericPrivate, GenericFullInput, GenericPartialInput
 from api.main.types.metadata import Metadata 
-from pydantic import BaseModel
+from api.main.types.task import TaskPublic, TaskPrivate 
+from pydantic import BaseModel, field_validator
 from uuid import UUID
 from datetime import datetime
-
+from typing import Any
 class TunnelPublic(BaseModel, GenericPublic):
     id: UUID
     name: str
@@ -11,6 +12,11 @@ class TunnelPublic(BaseModel, GenericPublic):
     interface_outer_id: UUID 
     reinforced_at: datetime | None = None
     reinforced_by: str | None = None
+    tasks: list[TaskPublic]
+    
+    @field_validator('tasks', mode='before')
+    def repack_tasks(cls, tasks: list[Any]) -> list[TaskPublic]:
+        return [TaskPublic(**(task.__dict__)) for task in tasks]
     
 class TunnelPrivate(Metadata, GenericPrivate):
     id: UUID
@@ -19,6 +25,11 @@ class TunnelPrivate(Metadata, GenericPrivate):
     interface_outer_id: UUID 
     reinforced_at: datetime | None = None
     reinforced_by: str | None = None
+    tasks: list[TaskPrivate]
+        
+    @field_validator('tasks', mode='before')
+    def repack_tasks(cls, tasks: list[Any]) -> list[TaskPrivate]:
+        return [TaskPrivate(**(task.__dict__)) for task in tasks]
     
 class TunnelFullInput(BaseModel, GenericFullInput):
     name: str

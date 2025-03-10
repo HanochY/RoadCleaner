@@ -375,3 +375,37 @@ DETAIL:  Failing row contains (533e8493-3400-47d4-aaa6-c6fa045a0036, int1, 198.5
 [ERROR] - 2025-03-06 18:37:22,535 - root - a9a7dc0f-fa09-4109-ab54-4e23176a5a52 SQLAlchemyRepository.undelete() got an unexpected keyword argument 'author_id'
 [ERROR] - 2025-03-10 14:46:33,455 - root - d5cf1d32-d1aa-4a5e-ba08-63cbf32e5d41 cannot access local variable 'token' where it is not associated with a value
 [ERROR] - 2025-03-10 16:41:24,197 - root - 7932662f-1fb2-47a4-93d2-ddb8ed39bc9f UserController.read_by_id() missing 1 required positional argument: 'current_user'
+[ERROR] - 2025-03-10 18:21:03,147 - root - eecbaab9-8315-4561-b38e-584f188f3955 1 validation error for SitePublic
+devices
+  Field required [type=missing, input_value={'_sa_instance_state': <s...6'), 'deleted_at': None}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.7/v/missing
+[ERROR] - 2025-03-10 18:22:17,678 - root - eecbaab9-8315-4561-b38e-584f188f3955 1 validation error for SitePublic
+devices
+  Field required [type=missing, input_value={'_sa_instance_state': <s...6'), 'deleted_at': None}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.7/v/missing
+[ERROR] - 2025-03-10 18:23:21,444 - root - b624affc-dd11-4ce6-9e83-4e2781491b50 '_sa_instance_state' is an invalid keyword argument for print()
+[ERROR] - 2025-03-10 18:23:55,843 - root - 99c48c3b-ea16-489b-9b66-586634bb1b31 str() takes at most 3 keyword arguments (10 given)
+[ERROR] - 2025-03-10 18:24:19,486 - root - 99c48c3b-ea16-489b-9b66-586634bb1b31 str() takes at most 3 keyword arguments (10 given)
+[ERROR] - 2025-03-10 18:24:21,353 - root - bb0cea41-a2e5-4e76-9dad-01aaeea16fb0 1 validation error for SitePublic
+devices
+  Field required [type=missing, input_value={'_sa_instance_state': <s...6'), 'deleted_at': None}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.7/v/missing
+[ERROR] - 2025-03-10 18:35:17,883 - root - 34c6ae1e-0fed-47d5-b6ec-c893313ea79e The unique() method must be invoked on this Result, as it contains results that include joined eager loads against collections
+[ERROR] - 2025-03-10 18:39:14,799 - root - 34c6ae1e-0fed-47d5-b6ec-c893313ea79e The unique() method must be invoked on this Result, as it contains results that include joined eager loads against collections
+[ERROR] - 2025-03-10 18:39:30,655 - root - 7b7e447b-b774-48d2-aa7b-85147b7f66e7 1 validation error for SitePublic
+devices.interfaces
+  Field required [type=missing, input_value={'_sa_instance_state': <s...82), 'deleted_at': None}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.7/v/missing
+[ERROR] - 2025-03-10 18:45:31,877 - root - d9bf3419-1740-4f84-bafe-349519962f8c 1 validation error for SitePublic
+devices.interfaces
+  Field required [type=missing, input_value={'_sa_instance_state': <s...82), 'deleted_at': None}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.7/v/missing
+[ERROR] - 2025-03-10 18:48:24,235 - root - d9bf3419-1740-4f84-bafe-349519962f8c 1 validation error for SitePublic
+devices.interfaces
+  Field required [type=missing, input_value={'_sa_instance_state': <s...82), 'deleted_at': None}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.7/v/missing
+[ERROR] - 2025-03-10 18:49:07,290 - root - 49e6f780-d15d-483e-a703-a09dedfafe27 (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: column tunnel.interface_inner does not exist
+[SQL: SELECT tunnel_details_juniper.id, tunnel.id AS id_1, tunnel.name, tunnel.interface_inner, tunnel.interface_outer, tunnel.reinforced_at, tunnel.reinforced_by, tunnel.vendor, tunnel.is_deleted, tunnel.created_at, tunnel.created_by, tunnel.modified_at, tunnel.modified_by, tunnel.deleted_at, tunnel.deleted_by, tunnel_details_juniper.associaton_name_inner, tunnel_details_juniper.associaton_name_outer, task_1.id AS id_2, task_1.name AS name_1, task_1.subject, task_1.start_time, task_1.end_time, task_1.tunnel, task_1.is_deleted AS is_deleted_1, task_1.created_at AS created_at_1, task_1.created_by AS created_by_1, task_1.modified_at AS modified_at_1, task_1.modified_by AS modified_by_1, task_1.deleted_at AS deleted_at_1, task_1.deleted_by AS deleted_by_1 
+FROM tunnel JOIN tunnel_details_juniper ON tunnel.id = tunnel_details_juniper.id LEFT OUTER JOIN task AS task_1 ON tunnel.id = task_1.tunnel 
+WHERE tunnel.is_deleted = false]
+(Background on this error at: https://sqlalche.me/e/20/f405)

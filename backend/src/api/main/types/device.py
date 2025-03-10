@@ -1,8 +1,10 @@
 from api.main.types._generic import GenericPublic, GenericPrivate, GenericFullInput, GenericPartialInput
 from api.main.types.metadata import Metadata 
+from api.main.types.interface import InterfacePublic, InterfacePrivate 
 from pydantic import BaseModel, field_validator
 from ipaddress import IPv4Address
 from uuid import UUID
+from typing import Any
 
 class DevicePublic(BaseModel, GenericPublic):
     id: UUID
@@ -10,13 +12,23 @@ class DevicePublic(BaseModel, GenericPublic):
     ip: IPv4Address
     type_id: UUID
     site_id: UUID
-
+    interfaces: list[InterfacePublic]
+    
+    @field_validator('interfaces', mode='before')
+    def repack_tasks(cls, interfaces: list[Any]) -> list[InterfacePublic]:
+        return [InterfacePublic(**(interface.__dict__)) for interface in interfaces]
+    
 class DevicePrivate(Metadata, GenericPrivate):
     id: UUID
     name: str
     ip: IPv4Address
     type_id: UUID
     site_id: UUID
+    interfaces: list[InterfacePrivate]
+    
+    @field_validator('interfaces', mode='before')
+    def repack_tasks(cls, interfaces: list[Any]) -> list[InterfacePrivate]:
+        return [InterfacePrivate(**(interface.__dict__)) for interface in interfaces]
     
 class DeviceFullInput(BaseModel, GenericFullInput):
     name: str

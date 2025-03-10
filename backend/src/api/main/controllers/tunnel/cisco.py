@@ -9,6 +9,7 @@ from api.main.types.tunnel.cisco import CiscoTunnelPublic, CiscoTunnelFullInput,
 from api.main.types.user import UserPrivate
 from dal.models.tunnel.cisco import CiscoTunnel as CiscoTunnelModel
 from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.orm import joinedload
 from sqlalchemy import select
 
 class CiscoTunnelController(Controller[CiscoTunnelModel, CiscoTunnelFullInput, CiscoTunnelPartialInput, CiscoTunnelPublic]):
@@ -29,13 +30,13 @@ class CiscoTunnelController(Controller[CiscoTunnelModel, CiscoTunnelFullInput, C
     
     async def read_by_id(self, id: UUID) -> CiscoTunnelPublic:
         async for session in generate_db_session():
-            result: CiscoTunnelModel | None = await self.repository.read_one(statement=select(CiscoTunnelModel).where(CiscoTunnelModel.id==id), session=session)
+            result: CiscoTunnelModel | None = await self.repository.read_one(statement=select(CiscoTunnelModel).where(CiscoTunnelModel.id==id).options(joinedload(CiscoTunnelModel.tasks)), session=session)
         if result: return CiscoTunnelPublic(**(result.__dict__))
         else: raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
     
     async def read_all(self) -> list[CiscoTunnelPublic]:
         async for session in generate_db_session():
-            results: Sequence[CiscoTunnelModel] = await self.repository.read_all(statement=select(CiscoTunnelModel), session=session)
+            results: Sequence[CiscoTunnelModel] = await self.repository.read_all(statement=select(CiscoTunnelModel).options(joinedload(CiscoTunnelModel.tasks)), session=session)
         if results: return [CiscoTunnelPublic(**(object.__dict__)) for object in results]
         else: raise HTTPException(status_code=status.HTTP_204_NO_CONTENT)
     
