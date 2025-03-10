@@ -9,6 +9,7 @@ from api.main.types.interface import InterfacePublic, InterfaceFullInput, Interf
 from api.main.types.user import UserPrivate
 from dal.models.interface import Interface as InterfaceModel
 from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy import select
 
 class InterfaceController(Controller[InterfaceModel, InterfaceFullInput, InterfacePartialInput, InterfacePublic]):
     db_model = InterfaceModel
@@ -28,13 +29,13 @@ class InterfaceController(Controller[InterfaceModel, InterfaceFullInput, Interfa
     
     async def read_by_id(self, id: UUID) -> InterfacePublic:
         async for session in generate_db_session():
-            results: Sequence[InterfaceModel] | None = await self.repository.read(filter=id==id, session=session)  
-        if results: return InterfacePublic(**(results[0].__dict__))
+            result: InterfaceModel | None = await self.repository.read_one(statement=select(InterfaceModel).where(InterfaceModel.id==id), session=session)  
+        if result: return InterfacePublic(**(result.__dict__))
         else: raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
     
     async def read_all(self) -> list[InterfacePublic]:
         async for session in generate_db_session():
-            results: Sequence[InterfaceModel] | None = await self.repository.read(session=session)
+            results: Sequence[InterfaceModel] = await self.repository.read_all(statement=select(InterfaceModel), session=session)
         if results: return [InterfacePublic(**(entity.__dict__)) for entity in results]
         else: raise HTTPException(status_code=status.HTTP_204_NO_CONTENT)
     

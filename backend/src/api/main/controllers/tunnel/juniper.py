@@ -9,6 +9,7 @@ from api.main.types.tunnel.juniper import JuniperTunnelPublic, JuniperTunnelFull
 from api.main.types.user import UserPrivate
 from dal.models.tunnel.juniper import JuniperTunnel as JuniperTunnelModel
 from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy import select
 
 class JuniperTunnelController(Controller[JuniperTunnelModel, JuniperTunnelFullInput, JuniperTunnelPartialInput, JuniperTunnelPublic]):
     db_model = JuniperTunnelModel
@@ -28,13 +29,13 @@ class JuniperTunnelController(Controller[JuniperTunnelModel, JuniperTunnelFullIn
     
     async def read_by_id(self, id: UUID) -> JuniperTunnelPublic:
         async for session in generate_db_session():
-            results: Sequence[JuniperTunnelModel] | None = await self.repository.read(filter=id==id, session=session)  
-        if results: return JuniperTunnelPublic(**(results[0].__dict__))
+            result: JuniperTunnelModel | None = await self.repository.read_one(statement=select(JuniperTunnelModel).where(JuniperTunnelModel.id==id), session=session)  
+        if result: return JuniperTunnelPublic(**(result.__dict__))
         else: raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
     
     async def read_all(self) -> list[JuniperTunnelPublic]:
         async for session in generate_db_session():
-            results: Sequence[JuniperTunnelModel] | None = await self.repository.read(session=session)
+            results: Sequence[JuniperTunnelModel] = await self.repository.read_all(statement=select(JuniperTunnelModel), session=session)
         if results: return [JuniperTunnelPublic(**(object.__dict__)) for object in results]
         else: raise HTTPException(status_code=status.HTTP_204_NO_CONTENT)
     

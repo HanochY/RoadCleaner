@@ -10,7 +10,7 @@ class Device(Common):
     name: Mapped[str]
     ip: Mapped[str]
     type_id: Mapped[UUID] = mapped_column(ForeignKey("device_type.id"), name="type")
-    site_id: Mapped[UUID] = mapped_column(ForeignKey("site.id"), name="site")
+    site_id: Mapped[UUID] = mapped_column(ForeignKey("site.id", ondelete="CASCADE"), name="site")
     
     type: Mapped["DeviceType"] = relationship(back_populates="devices") # type: ignore
     site: Mapped["Site"] = relationship(back_populates="devices") # type: ignore

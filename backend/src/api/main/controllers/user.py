@@ -8,9 +8,9 @@ from api.main.controllers._crud import Controller
 from api.main.types.user import UserPublic, UserPrivate, UserFullInput, UserPartialInput
 from dal.models.user import User as UserModel
 from sqlalchemy.orm.exc import NoResultFound
-
-
+from sqlalchemy import select
 from utils.passwords import hash_password
+
 class UserController(Controller[UserModel, UserFullInput, UserPartialInput, UserPublic]):
     db_model = UserModel
     
@@ -29,16 +29,15 @@ class UserController(Controller[UserModel, UserFullInput, UserPartialInput, User
             raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY)
         return entity.id 
     
-    async def read_by_id(self, current_user: UserPrivate, id: UUID) -> UserPublic:
+    async def read_by_id(self, id: UUID) -> UserPublic:
         async for session in generate_db_session():
-            results: Sequence[UserModel] | None = await self.repository.read(filter=id==id, session=session)  
-        if results: return UserPublic(**(results[0].__dict__))
+            result: UserModel | None = await self.repository.read_one(statement=select(UserModel).where(UserModel.id==id), session=session)  
+        if result: return UserPublic(**(result.__dict__))
         else: raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
     
     async def read_all(self) -> list[UserPublic]:
         async for session in generate_db_session():
-            print('ttt')
-            results: Sequence[UserModel] | None = await self.repository.read(session=session)
+            results: Sequence[UserModel] = await self.repository.read_all(statement=select(UserModel), session=session)
         if results: return [UserPublic(**(entity.__dict__)) for entity in results]
         else: raise HTTPException(status_code=status.HTTP_204_NO_CONTENT)
     

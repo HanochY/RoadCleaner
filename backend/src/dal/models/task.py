@@ -12,6 +12,6 @@ class Task(Common):
     subject: Mapped[UUID]
     start_time: Mapped[datetime] = mapped_column(default=datetime.now)
     end_time: Mapped[datetime | None] = mapped_column(default=None)
-    tunnel_id: Mapped[UUID | None] = mapped_column(ForeignKey("tunnel.id"), name="tunnel")
+    tunnel_id: Mapped[UUID | None] = mapped_column(ForeignKey("tunnel.id", ondelete="CASCADE"), name="tunnel")
     
     tunnel: Mapped["Tunnel"] = relationship(back_populates="tasks") # type: ignore

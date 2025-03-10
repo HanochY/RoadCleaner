@@ -23,15 +23,12 @@ async def generate_fastapi_request_log(request: Request) -> RequestLog:
     )
 
 class LoggingMiddleware(BaseHTTPMiddleware):
-
-    async def dispatch(self, request: Request, call_next):
+    async def dispatch(self, request: Request, call_next) -> Response:
         try:
             log = await generate_fastapi_request_log(request)
             logger.info(json.loads(log.model_dump_json()))
-            print("mid")
             response = await call_next(request)
             return response
         except Exception as e:
-            print(e)
             logger.error("%s %s", *ErrorLog(error_message=str(e)).model_dump().values())
             raise

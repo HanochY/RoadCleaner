@@ -2,20 +2,16 @@ from api.main.types.tunnel._generic import TunnelPublic, TunnelPrivate, TunnelFu
 
 
 class CiscoTunnelPublic(TunnelPublic):
-    keychain_core: str
-    keychain_edge: str
+    keychain_inner: str | None = None
+    keychain_outer: str | None = None
     
 class CiscoTunnelPrivate(TunnelPrivate):
-    keychain_core: str
-    keychain_edge: str
+    keychain_inner: str | None = None
+    keychain_outer: str | None = None
     
 class CiscoTunnelFullInput(TunnelFullInput):
-    keychain_core: str
-    keychain_edge: str
     class Config(TunnelFullInput.Config):
         pass
 class CiscoTunnelPartialInput(TunnelPartialInput):
-    keychain_core: str
-    keychain_edge: str
     class Config(TunnelPartialInput.Config):
         pass

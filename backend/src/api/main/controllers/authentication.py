@@ -12,19 +12,21 @@ from dal.models.user import User as UserModel
 from dal.repository import SQLAlchemyRepository
 from sqlalchemy.ext.asyncio import AsyncSession 
 from dal.db_manager import generate_db_session
-  
+from sqlalchemy import select
 class AuthenticationController:
     
     repository = SQLAlchemyRepository(Model=UserModel)
     
     async def find_user_by_username(self, username: str, session: AsyncSession) -> UserModel:
-        user: UserModel = (await self.repository.read(session=session, filter=UserModel.name == username))[0]
-        return user or None
+        user: UserModel | None = (await self.repository.read_one(session=session, statement=select(UserModel).where(UserModel.name == username)))
+        return user
 
     async def authenticate_for_access_token(self, form_data: OAuth2PasswordRequestForm = Depends()) -> OAuthBearerToken:
         try:
+            print(form_data.username)
             async for session in generate_db_session():
                 user = await self.find_user_by_username(form_data.username, session)
+            print(user.id)
             requested_scopes = form_data.scopes
             if user:
                 allowed_scopes = ["device_type:read",
@@ -44,6 +46,8 @@ class AuthenticationController:
                                             "user:read",
                                             "user",]
                 correct_password_hash = user.password
+                
+                print(correct_password_hash)
                 if verify_password(form_data.password, correct_password_hash):
                     token = encode_access_token(TokenData(sub=user.id,
                                                                     scopes=[scope for scope in requested_scopes if scope in allowed_scopes]))

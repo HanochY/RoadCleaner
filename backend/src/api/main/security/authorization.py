@@ -18,7 +18,7 @@ from dal.db_manager import generate_db_session
 from pydantic import ValidationError
 from utils.scopes import generate_authenticate_value, authorize_scopes
 from api.main.types.user import UserPrivate
-
+from sqlalchemy import select
 
 async def get_current_user(security_scopes: SecurityScopes, 
     token: Annotated[str, Depends(oauth2_scheme)]) -> UserPrivate:
@@ -44,14 +44,10 @@ async def get_current_user(security_scopes: SecurityScopes,
     if not await authorize_scopes(security_scopes, token_data.scopes):
         raise authorization_exception
     async for session in generate_db_session():
-        user_results: Sequence[UserModel] = await user_repository.read(filter=UserModel.id == token_data.sub, session=session)
-        if not user_results:
+        user: UserModel | None = await user_repository.read_one(statement=select(UserModel).where(UserModel.id == token_data.sub), session=session)
+        if not user:
             raise authorization_exception
-        user: UserModel = user_results[0]
         user = UserPrivate(**(user.__dict__))
-        print('zzzz')
-        print(user)
-    print('qqq')
     return user
 
 async def authorize_user(current_user: Annotated[UserPrivate, Security(dependency=get_current_user, scopes=["self:read"])],

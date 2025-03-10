@@ -373,3 +373,5 @@ DETAIL:  Failing row contains (533e8493-3400-47d4-aaa6-c6fa045a0036, int1, 198.5
 
 [ERROR] - 2025-03-06 18:35:11,919 - root - a9a7dc0f-fa09-4109-ab54-4e23176a5a52 SQLAlchemyRepository.undelete() got an unexpected keyword argument 'author_id'
 [ERROR] - 2025-03-06 18:37:22,535 - root - a9a7dc0f-fa09-4109-ab54-4e23176a5a52 SQLAlchemyRepository.undelete() got an unexpected keyword argument 'author_id'
+[ERROR] - 2025-03-10 14:46:33,455 - root - d5cf1d32-d1aa-4a5e-ba08-63cbf32e5d41 cannot access local variable 'token' where it is not associated with a value
+[ERROR] - 2025-03-10 16:41:24,197 - root - 7932662f-1fb2-47a4-93d2-ddb8ed39bc9f UserController.read_by_id() missing 1 required positional argument: 'current_user'

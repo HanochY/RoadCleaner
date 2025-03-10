@@ -2,20 +2,16 @@ from api.main.types.tunnel._generic import TunnelPublic, TunnelPrivate, TunnelFu
 
 
 class JuniperTunnelPublic(TunnelPublic):
-    associaton_name_core: str
-    associaton_name_edge: str
+    associaton_name_inner: str | None = None
+    associaton_name_outer: str | None = None
     
 class JuniperTunnelPrivate(TunnelPrivate):
-    associaton_name_core: str
-    associaton_name_edge: str
+    associaton_name_inner: str | None = None
+    associaton_name_outer: str | None = None
     
 class JuniperTunnelFullInput(TunnelFullInput):
-    associaton_name_core: str
-    associaton_name_edge: str
     class Config(TunnelFullInput.Config):
         pass
 class JuniperTunnelPartialInput(TunnelPartialInput):
-    associaton_name_core: str
-    associaton_name_edge: str
     class Config(TunnelPartialInput.Config):
         pass

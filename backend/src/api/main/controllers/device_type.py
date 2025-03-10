@@ -9,6 +9,7 @@ from api.main.types.device_type import DeviceTypePublic, DeviceTypeFullInput, De
 from api.main.types.user import UserPrivate
 from dal.models.device_type import DeviceType as DeviceTypeModel
 from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy import select
 
 class DeviceTypeController(Controller[DeviceTypeModel, DeviceTypeFullInput, DeviceTypePartialInput, DeviceTypePublic]):
     db_model = DeviceTypeModel
@@ -30,13 +31,13 @@ class DeviceTypeController(Controller[DeviceTypeModel, DeviceTypeFullInput, Devi
     
     async def read_by_id(self, id: UUID) -> DeviceTypePublic:
         async for session in generate_db_session():
-            results: Sequence[DeviceTypeModel] | None = await self.repository.read(filter=id==id, session=session)  
-        if results: return DeviceTypePublic(**(results[0].__dict__))
+            result: DeviceTypeModel | None = await self.repository.read_one(statement=select(DeviceTypeModel).where(id==id), session=session)  
+        if result: return DeviceTypePublic(**(result.__dict__))
         else: raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
     
     async def read_all(self) -> list[DeviceTypePublic]:
         async for session in generate_db_session():
-            results: Sequence[DeviceTypeModel] | None = await self.repository.read(session=session)
+            results: Sequence[DeviceTypeModel] = await self.repository.read_all(statement=select(DeviceTypeModel), session=session)
         if results: return [DeviceTypePublic(**(entity.__dict__)) for entity in results]
         else: raise HTTPException(status_code=status.HTTP_204_NO_CONTENT)
     

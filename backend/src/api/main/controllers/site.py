@@ -9,6 +9,7 @@ from api.main.types.site import SitePublic, SiteFullInput, SitePartialInput
 from api.main.types.user import UserPrivate
 from dal.models.site import Site as SiteModel
 from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy import select
 
 class SiteController(Controller[SiteModel, SiteFullInput, SitePartialInput, SitePublic]):
     db_model = SiteModel
@@ -28,13 +29,13 @@ class SiteController(Controller[SiteModel, SiteFullInput, SitePartialInput, Site
     
     async def read_by_id(self, id: UUID) -> SitePublic:
         async for session in generate_db_session():
-            results: Sequence[SiteModel] | None = await self.repository.read(filter=id==id, session=session)  
-        if results: return SitePublic(**(results[0].__dict__))
+            result: SiteModel | None = await self.repository.read_one(statement=select(SiteModel).where(SiteModel.id==id), session=session)  
+        if result: return SitePublic(**(result.__dict__))
         else: raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
     
     async def read_all(self) -> list[SitePublic]:
         async for session in generate_db_session():
-            results: Sequence[SiteModel] | None = await self.repository.read(session=session)
+            results: Sequence[SiteModel] = await self.repository.read_all(statement=select(SiteModel), session=session)
         if results: return [SitePublic(**(entity.__dict__)) for entity in results]
         else: raise HTTPException(status_code=status.HTTP_204_NO_CONTENT)
     
