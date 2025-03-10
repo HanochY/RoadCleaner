@@ -28,6 +28,9 @@ class InterfaceFullInput(BaseModel, GenericFullInput):
     @field_validator('ip')
     def validate_ip(cls, value):
         return str(IPv4Address(value))
+    
+    class Config(GenericFullInput.Config):
+        pass
 
 class InterfacePartialInput(BaseModel, GenericPartialInput):
     name: str | None = None
@@ -39,3 +42,5 @@ class InterfacePartialInput(BaseModel, GenericPartialInput):
     def validate_ip(cls, value):
         if value: return str(IPv4Address(value))
         else: return None
+    class Config(GenericPartialInput.Config):
+        pass

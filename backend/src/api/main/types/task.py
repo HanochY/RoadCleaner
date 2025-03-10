@@ -26,9 +26,14 @@ class TaskFullInput(BaseModel, GenericFullInput):
     subject: UUID
     details: str
 
+    class Config(GenericFullInput.Config):
+        pass
 
 class TaskPartialInput(BaseModel, GenericPartialInput):
     id: UUID | None = None
     name: str | None = None
     subject: UUID | None = None
     details: str | None = None
+
+    class Config(GenericPartialInput.Config):
+        pass

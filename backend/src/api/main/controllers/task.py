@@ -42,7 +42,6 @@ class TaskController(Controller[TaskModel, TaskFullInput, TaskPartialInput, Task
         try:
             async for session in generate_db_session():
                 await self.repository.update(id=id, session=session, author_id=current_user.id, **(new_data.model_dump()))
-                await session.commit()
         except NoResultFound:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
         except TypeError as e:
@@ -70,10 +69,10 @@ class TaskController(Controller[TaskModel, TaskFullInput, TaskPartialInput, Task
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
         return None
     
-    async def undelete(self, current_user: UserPrivate, id: UUID) -> TaskPublic:
+    async def undelete(self, id: UUID) -> TaskPublic:
         try:
             async for session in generate_db_session():
-                entity = await self.repository.undelete(id=id, session=session, author_id=current_user.id)
+                entity = await self.repository.undelete(id=id, session=session)
                 await session.commit()
                 await session.refresh(entity)
         except NoResultFound:

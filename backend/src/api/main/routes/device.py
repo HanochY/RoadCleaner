@@ -42,10 +42,25 @@ async def partial_update_device(id: UUID, device_update: Annotated[DevicePartial
     response: DevicePublic = await controller.partial_update(current_user=current_user, id=id, new_data=device_update)
     return response
 
+@router.patch('/{id}/delete', status_code=status.HTTP_200_OK)
+async def delete_device(id: UUID, current_user: Annotated[UserPrivate,
+                                                    Security(authorize_user, 
+                                                    scopes=["device"])]) -> None:
+    print('k')
+    response: DevicePublic = await controller.delete(current_user=current_user, id=id)
+    return response
+
+@router.patch('/{id}/undelete', status_code=status.HTTP_200_OK)
+async def undelete_device(id: UUID, current_user: Annotated[UserPrivate,
+                                                    Security(authorize_user, 
+                                                    scopes=["device"])]) -> DevicePublic:
+    response: DevicePublic = await controller.undelete(id=id)
+    return response
+
 @router.delete('/{id}', status_code=status.HTTP_204_NO_CONTENT)
-async def delete_device(id: UUID,
+async def hard_delete_device(id: UUID,
                         current_user: Annotated[UserPrivate,
                                                     Security(authorize_user, 
                                                     scopes=["device"])]) -> None:
-    await controller.delete(current_user=current_user, id=id)
+    await controller.hard_delete(current_user=current_user, id=id)
     return Response(status_code=status.HTTP_204_NO_CONTENT)

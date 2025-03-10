@@ -52,6 +52,8 @@ class SQLAlchemyRepository():
         return entity
 
     async def delete(self, id: UUID, session: AsyncSession, author_id: UUID) -> Common:
+        await self.hard_delete(id=id, session=session)   
+        await session.rollback()
         statement = select(self.Model).where(self.Model.id == id)
         result = await session.execute(statement)
         entity = result.scalars().one()
@@ -74,7 +76,8 @@ class SQLAlchemyRepository():
     async def hard_delete(self, session: AsyncSession, id: UUID) -> None:
         statement = select(self.Model).where(self.Model.id == id)
         result = await session.execute(statement)
-        entity = result.scalars().one()
+        entity = result.scalar_one_or_none()
         if entity:
-            session.delete(result)
+            await session.delete(entity)
+            await session.flush()
     

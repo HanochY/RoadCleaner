@@ -327,3 +327,49 @@ site_id
     For further information visit https://errors.pydantic.dev/2.7/v/uuid_type
 [ERROR] - 2025-03-03 15:44:54,663 - root - 32f6bb88-d2a8-4ae3-a4d1-035fa0571fb7 Instance '<Device at 0x279c2d39690>' is not persistent within this Session
 [ERROR] - 2025-03-03 15:47:21,266 - root - 2054959b-a6fe-4109-9732-86e94cf0e205 Instance '<Device at 0x21f72845550>' is not persistent within this Session
+[ERROR] - 2025-03-06 15:59:46,771 - root - e4caae2f-6143-4d87-9673-6bd93bae7133 SQLAlchemyRepository.hard_delete() got an unexpected keyword argument 'author_id'
+[ERROR] - 2025-03-06 16:03:47,330 - root - 7ed059de-8868-49dd-914e-6db4189f4364 Class 'sqlalchemy.engine.result.ChunkedIteratorResult' is not mapped
+[ERROR] - 2025-03-06 16:04:14,367 - root - 7ed059de-8868-49dd-914e-6db4189f4364 Class 'sqlalchemy.engine.result.ChunkedIteratorResult' is not mapped
+[ERROR] - 2025-03-06 16:07:35,998 - root - 53f3b361-65ff-4bb8-b6ec-047999bdbd9e Class 'sqlalchemy.engine.result.ChunkedIteratorResult' is not mapped
+[ERROR] - 2025-03-06 16:11:25,960 - root - 7c604642-2694-433f-a5f2-9775338d81c5 Class 'sqlalchemy.engine.result.ChunkedIteratorResult' is not mapped
+[ERROR] - 2025-03-06 16:13:07,628 - root - 5420cb66-5a06-47bd-b1e1-43b30bbd2904 (sqlalchemy.dialects.postgresql.asyncpg.IntegrityError) <class 'asyncpg.exceptions.NotNullViolationError'>: null value in column "type" of relation "device" violates not-null constraint
+DETAIL:  Failing row contains (ceaa2cac-b177-488b-a452-33be990ce203, device2, 2.2.3.4, null, 39461c74-31d0-47d6-987f-ab04a4ef0e91, f, 2025-03-03 11:57:52.400425, 1e777a72-d1c7-45fb-9375-e0562e4eb586, 2025-03-03 11:57:52.400425, 1e777a72-d1c7-45fb-9375-e0562e4eb586, null, null).
+[SQL: UPDATE device SET type=$1::UUID WHERE device.id = $2::UUID]
+[parameters: (None, UUID('ceaa2cac-b177-488b-a452-33be990ce203'))]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+[ERROR] - 2025-03-06 18:25:43,909 - root - b1377103-455f-4b0e-b85b-3505118923a1 (sqlalchemy.dialects.postgresql.asyncpg.IntegrityError) <class 'asyncpg.exceptions.NotNullViolationError'>: null value in column "type" of relation "device" violates not-null constraint
+DETAIL:  Failing row contains (ceaa2cac-b177-488b-a452-33be990ce203, device2, 2.2.3.4, null, 39461c74-31d0-47d6-987f-ab04a4ef0e91, f, 2025-03-03 11:57:52.400425, 1e777a72-d1c7-45fb-9375-e0562e4eb586, 2025-03-03 11:57:52.400425, 1e777a72-d1c7-45fb-9375-e0562e4eb586, null, null).
+[SQL: UPDATE device SET type=$1::UUID WHERE device.id = $2::UUID]
+[parameters: (None, UUID('ceaa2cac-b177-488b-a452-33be990ce203'))]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+[ERROR] - 2025-03-06 18:26:47,938 - root - b1377103-455f-4b0e-b85b-3505118923a1 (sqlalchemy.dialects.postgresql.asyncpg.IntegrityError) <class 'asyncpg.exceptions.NotNullViolationError'>: null value in column "type" of relation "device" violates not-null constraint
+DETAIL:  Failing row contains (7239b7f7-6727-40d0-aad6-ca74cd7cc49b, device3, 3.3.3.3, null, cd9991e7-88a6-4d9b-9713-722865cb06a0, t, 2025-03-03 15:53:54.503428, 1e777a72-d1c7-45fb-9375-e0562e4eb586, 2025-03-03 15:53:54.503428, 1e777a72-d1c7-45fb-9375-e0562e4eb586, 2025-03-03 16:39:05.644444, 1e777a72-d1c7-45fb-9375-e0562e4eb586).
+[SQL: UPDATE device SET type=$1::UUID WHERE device.id = $2::UUID]
+[parameters: [(None, UUID('7239b7f7-6727-40d0-aad6-ca74cd7cc49b')), (None, UUID('cba8b16a-8641-42d3-8706-1540a4ef293c'))]]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+[ERROR] - 2025-03-06 18:27:22,348 - root - b1377103-455f-4b0e-b85b-3505118923a1 (sqlalchemy.dialects.postgresql.asyncpg.IntegrityError) <class 'asyncpg.exceptions.NotNullViolationError'>: null value in column "type" of relation "device" violates not-null constraint
+DETAIL:  Failing row contains (7239b7f7-6727-40d0-aad6-ca74cd7cc49b, device3, 3.3.3.3, null, cd9991e7-88a6-4d9b-9713-722865cb06a0, t, 2025-03-03 15:53:54.503428, 1e777a72-d1c7-45fb-9375-e0562e4eb586, 2025-03-03 15:53:54.503428, 1e777a72-d1c7-45fb-9375-e0562e4eb586, 2025-03-03 16:39:05.644444, 1e777a72-d1c7-45fb-9375-e0562e4eb586).
+[SQL: UPDATE device SET type=$1::UUID WHERE device.id = $2::UUID]
+[parameters: [(None, UUID('7239b7f7-6727-40d0-aad6-ca74cd7cc49b')), (None, UUID('cba8b16a-8641-42d3-8706-1540a4ef293c'))]]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+[ERROR] - 2025-03-06 18:29:43,086 - root - a64efc85-6f6c-44cb-8fd0-7936c5224aea (sqlalchemy.dialects.postgresql.asyncpg.IntegrityError) <class 'asyncpg.exceptions.NotNullViolationError'>: null value in column "type" of relation "device" violates not-null constraint
+DETAIL:  Failing row contains (7239b7f7-6727-40d0-aad6-ca74cd7cc49b, device3, 3.3.3.3, null, cd9991e7-88a6-4d9b-9713-722865cb06a0, t, 2025-03-03 15:53:54.503428, 1e777a72-d1c7-45fb-9375-e0562e4eb586, 2025-03-03 15:53:54.503428, 1e777a72-d1c7-45fb-9375-e0562e4eb586, 2025-03-03 16:39:05.644444, 1e777a72-d1c7-45fb-9375-e0562e4eb586).
+[SQL: UPDATE device SET type=$1::UUID WHERE device.id = $2::UUID]
+[parameters: [(None, UUID('7239b7f7-6727-40d0-aad6-ca74cd7cc49b')), (None, UUID('cba8b16a-8641-42d3-8706-1540a4ef293c'))]]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+[ERROR] - 2025-03-06 18:30:45,164 - root - a64efc85-6f6c-44cb-8fd0-7936c5224aea (sqlalchemy.dialects.postgresql.asyncpg.IntegrityError) <class 'asyncpg.exceptions.NotNullViolationError'>: null value in column "device" of relation "interface" violates not-null constraint
+DETAIL:  Failing row contains (533e8493-3400-47d4-aaa6-c6fa045a0036, int1, 198.51.100.1, null, null, f, 2025-03-03 11:58:33.13074, 1e777a72-d1c7-45fb-9375-e0562e4eb586, 2025-03-03 11:58:33.13074, 1e777a72-d1c7-45fb-9375-e0562e4eb586, null, null).
+[SQL: UPDATE interface SET device=$1::UUID WHERE interface.id = $2::UUID]
+[parameters: (None, UUID('533e8493-3400-47d4-aaa6-c6fa045a0036'))]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+[ERROR] - 2025-03-06 18:31:50,104 - root - a64efc85-6f6c-44cb-8fd0-7936c5224aea 1 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': None, 'url': 'https://errors.pydantic.dev/2.7/v/model_attributes_type'}
+
+[ERROR] - 2025-03-06 18:33:22,258 - root - a64efc85-6f6c-44cb-8fd0-7936c5224aea 1 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': None, 'url': 'https://errors.pydantic.dev/2.7/v/model_attributes_type'}
+
+[ERROR] - 2025-03-06 18:33:27,327 - root - e99a4643-8ecb-4cb7-bfc4-8055ecf8ea25 1 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': None, 'url': 'https://errors.pydantic.dev/2.7/v/model_attributes_type'}
+
+[ERROR] - 2025-03-06 18:35:11,919 - root - a9a7dc0f-fa09-4109-ab54-4e23176a5a52 SQLAlchemyRepository.undelete() got an unexpected keyword argument 'author_id'
+[ERROR] - 2025-03-06 18:37:22,535 - root - a9a7dc0f-fa09-4109-ab54-4e23176a5a52 SQLAlchemyRepository.undelete() got an unexpected keyword argument 'author_id'

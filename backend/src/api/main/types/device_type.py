@@ -13,6 +13,10 @@ class DeviceTypePrivate(Metadata, GenericPrivate):
     
 class DeviceTypeFullInput(BaseModel, GenericFullInput):
     name: str
+    class Config(GenericFullInput.Config):
+        pass
 
 class DeviceTypePartialInput(BaseModel, GenericPartialInput):
     name: str | None = None
+    class Config(GenericPartialInput.Config):
+        pass

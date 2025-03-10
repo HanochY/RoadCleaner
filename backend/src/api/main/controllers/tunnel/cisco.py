@@ -66,10 +66,10 @@ class CiscoTunnelController(Controller[CiscoTunnelModel, CiscoTunnelFullInput, C
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
         return None
     
-    async def undelete(self, current_user: UserPrivate, id: UUID) -> CiscoTunnelPublic:
+    async def undelete(self, id: UUID) -> CiscoTunnelPublic:
         try:
             async for session in generate_db_session():
-                entity = await self.repository.undelete(id=id, session=session, author_id=current_user.id)
+                entity = await self.repository.undelete(id=id, session=session)
         except NoResultFound:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
         return CiscoTunnelPublic(**(entity.__dict__))

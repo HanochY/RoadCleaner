@@ -13,6 +13,9 @@ class SitePrivate(Metadata, GenericPrivate):
     
 class SiteFullInput(BaseModel, GenericFullInput):
     name: str
-
+    class Config(GenericFullInput.Config):
+        pass
 class SitePartialInput(BaseModel, GenericPartialInput):
     name: str | None = None
+    class Config(GenericPartialInput.Config):
+        pass

@@ -39,10 +39,6 @@ async def read_current_user(current_user: Annotated[UserPrivate,
                                                     scopes=["self"])]) -> UserPublic:
     return current_user
 
-
-    
-
-
 @router.patch('/{id}', status_code=status.HTTP_200_OK)
 async def partial_update_user(id: UUID,
                               user_update: Annotated[UserPartialInput, Depends], 
@@ -52,10 +48,24 @@ async def partial_update_user(id: UUID,
     response: UserPublic = await controller.partial_update(current_user=current_user, id=id, new_data=user_update)
     return response
 
+@router.patch('/{id}/delete', status_code=status.HTTP_200_OK)
+async def delete_user(id: UUID, current_user: Annotated[UserPrivate,
+                                                    Security(authorize_user, 
+                                                    scopes=["user"])]) -> None:
+    response: UserPublic = await controller.delete(current_user=current_user, id=id)
+    return response
+
+@router.patch('/{id}/undelete', status_code=status.HTTP_200_OK)
+async def undelete_user(id: UUID, current_user: Annotated[UserPrivate,
+                                                    Security(authorize_user, 
+                                                    scopes=["user"])]) -> UserPublic:
+    response: UserPublic = await controller.undelete(id=id)
+    return response
+
 @router.delete('/{id}', status_code=status.HTTP_204_NO_CONTENT)
-async def delete_user(id: UUID,
+async def hard_delete_user(id: UUID,
                       current_user: Annotated[UserPrivate,
                                                     Security(authorize_user, 
                                                     scopes=["user"])]) -> None:
-    await controller.delete(current_user=current_user, id=id)
+    await controller.hard_delete(current_user=current_user, id=id)
     return Response(status_code=status.HTTP_204_NO_CONTENT)

@@ -70,10 +70,10 @@ class SiteController(Controller[SiteModel, SiteFullInput, SitePartialInput, Site
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
         return None
     
-    async def undelete(self, current_user: UserPrivate, id: UUID) -> SitePublic:
+    async def undelete(self, id: UUID) -> SitePublic:
         try:
             async for session in generate_db_session():
-                entity = await self.repository.undelete(id=id, session=session, author_id=current_user.id)
+                entity = await self.repository.undelete(id=id, session=session)
                 await session.commit()
                 await session.refresh(entity)
         except NoResultFound:

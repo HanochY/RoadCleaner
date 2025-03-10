@@ -18,8 +18,11 @@ class UserFullInput(BaseModel, GenericFullInput):
     name: str
     password: str
     admin: bool
-    
+    class Config(GenericFullInput.Config):
+        pass
 class UserPartialInput(BaseModel, GenericPartialInput):
     name: str | None = None
     password: str | None = None
     admin: bool | None = None
+    class Config(GenericPartialInput.Config):
+        pass

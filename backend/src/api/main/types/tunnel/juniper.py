@@ -12,7 +12,10 @@ class JuniperTunnelPrivate(TunnelPrivate):
 class JuniperTunnelFullInput(TunnelFullInput):
     associaton_name_core: str
     associaton_name_edge: str
-    
+    class Config(TunnelFullInput.Config):
+        pass
 class JuniperTunnelPartialInput(TunnelPartialInput):
     associaton_name_core: str
     associaton_name_edge: str
+    class Config(TunnelPartialInput.Config):
+        pass

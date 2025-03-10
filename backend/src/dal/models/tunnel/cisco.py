@@ -9,8 +9,7 @@ class CiscoTunnel(Tunnel):
     id: Mapped[UUID] = mapped_column(ForeignKey("tunnel.id"), primary_key=True)
     keychain_core: Mapped[str]
     keychain_edge: Mapped[str]
-    key_name_core: Mapped[str]
-    key_name_edge: Mapped[str]
+
     __mapper_args__ = {
         'polymorphic_identity': 'tunnel_cisco'
     }
