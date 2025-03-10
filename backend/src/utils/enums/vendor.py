@@ -1,6 +1,6 @@
 from enum import auto
-from strenum import UppercaseStrEnum
+from strenum import PascalCaseStrEnum
 
-class Vendor(UppercaseStrEnum):
+class Vendor(PascalCaseStrEnum):
     CISCO = auto()
     JUNIPER = auto()
