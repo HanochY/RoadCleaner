@@ -11,15 +11,6 @@ router = APIRouter(prefix="/device_type", tags=["device_type"])
 
 controller = DeviceTypeController()
 
-@router.post('/', status_code=status.HTTP_201_CREATED)
-async def create_device_type(new_device_type: Annotated[DeviceTypeFullInput, Depends],
-                             current_user: Annotated[UserPrivate,
-                                                    Security(authorize_user, 
-                                                    scopes=["device_type"])]) -> UUID | None:
-    print('aaa')
-    response: UUID = await controller.create(current_user=current_user, data=new_device_type)
-    return response
-
 @router.get('/all', status_code=status.HTTP_200_OK, response_model=list[DeviceTypePublic])
 async def read_all_device_types(current_user: Annotated[UserPrivate,
                                                     Security(authorize_user, 
@@ -35,33 +26,3 @@ async def read_device_type(id: UUID,
     response: DeviceTypePublic | None = await controller.read_by_id(id=id)
     return response
 
-@router.patch('/{id}', status_code=status.HTTP_200_OK)
-async def partial_update_device_type(id: UUID,
-                                     device_type_update: Annotated[DeviceTypePartialInput, Depends], 
-                                     current_user: Annotated[UserPrivate,
-                                                    Security(authorize_user, 
-                                                    scopes=["device_type"])]) -> DeviceTypePublic:
-    response: DeviceTypePublic = await controller.partial_update(current_user=current_user, id=id, new_data=device_type_update)
-    return response
-
-@router.patch('/{id}/delete', status_code=status.HTTP_200_OK)
-async def delete_device_type(id: UUID, current_user: Annotated[UserPrivate,
-                                                    Security(authorize_user, 
-                                                    scopes=["device_type"])]) -> None:
-    response: DeviceTypePublic = await controller.delete(current_user=current_user, id=id)
-    return response
-
-@router.patch('/{id}/undelete', status_code=status.HTTP_200_OK)
-async def delete_device_type(id: UUID, current_user: Annotated[UserPrivate,
-                                                    Security(authorize_user, 
-                                                    scopes=["device_type"])]) -> DeviceTypePublic:
-    response: DeviceTypePublic = await controller.undelete(id=id)
-    return response
-
-@router.delete('/{id}', status_code=status.HTTP_204_NO_CONTENT)
-async def hard_delete_device_type(id: UUID, 
-                             current_user: Annotated[UserPrivate,
-                                                    Security(authorize_user, 
-                                                    scopes=["device_type"])]) -> None:
-    await controller.hard_delete(current_user=current_user, id=id)
-    return Response(status_code=status.HTTP_204_NO_CONTENT)

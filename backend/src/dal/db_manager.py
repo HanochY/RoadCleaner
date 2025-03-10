@@ -1,6 +1,7 @@
 
 from config.provider import ConfigProvider
 from dal.models._base import Base
+from utils.enums.vendor import Vendor
 from dal.models.device_type import DeviceType
 from dal.models.device import Device
 from dal.models.interface import Interface
@@ -69,6 +70,15 @@ class DatabaseSessionManager:
             raise Exception("DatabaseSessionManager is not initialized")
         async with self._engine.begin() as conn: 
             await conn.run_sync(Base.metadata.create_all)
+
+            async with session_manager.session() as session:
+                type = DeviceType(name=Vendor.CISCO)
+            # Example data insertion
+                session.add_all([
+                    DeviceType(name=Vendor.CISCO),
+                    DeviceType(name=Vendor.JUNIPER)
+                ])
+                await session.commit()
 
 
 session_manager = DatabaseSessionManager(DATABASE_URL)
