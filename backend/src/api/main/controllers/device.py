@@ -67,7 +67,7 @@ class DeviceController(Controller[DeviceModel, DeviceFullInput, DevicePartialInp
     async def delete(self, id: UUID) -> None:
         try:
             async for session in generate_db_session():
-                await self.repository.hard_delete(id=id, session=session)
+                await self.repository.delete(id=id, session=session)
                 await session.commit()
         except NoResultFound:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
