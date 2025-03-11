@@ -30,10 +30,3 @@ class Controller(ABC, Generic[T, C, U, O]):
     @abstractmethod
     async def delete(self, id: UUID) -> None:
         pass
-    @abstractmethod
-    async def undelete(self, id: UUID) -> O:
-        pass
-    @abstractmethod
-    async def hard_delete(self, id: UUID) -> None:
-        pass
-    

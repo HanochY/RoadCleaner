@@ -43,25 +43,10 @@ async def partial_update_juniper_tunnel(id: UUID,
     response: JuniperTunnelPublic = await controller.partial_update(current_user=current_user, id=id, new_data=juniper_tunnel_update)
     return response
 
-@router.patch('/{id}/delete', status_code=status.HTTP_200_OK)
-async def delete_juniper_tunnel(id: UUID, current_user: Annotated[UserPrivate,
-                                                    Security(authorize_user, 
-                                                    scopes=["tunnel"])]) -> None:
-    response: JuniperTunnelPublic = await controller.delete(current_user=current_user, id=id)
-    return response
-
-@router.patch('/{id}/undelete', status_code=status.HTTP_200_OK)
-async def undelete_juniper_tunnel(id: UUID, current_user: Annotated[UserPrivate,
-                                                    Security(authorize_user, 
-                                                    scopes=["tunnel"])]) -> JuniperTunnelPublic:
-    response: JuniperTunnelPublic = await controller.undelete(id=id)
-    return response
-
-
 @router.delete('/{id}', status_code=status.HTTP_204_NO_CONTENT)
-async def hard_delete_juniper_tunnel(id: UUID, 
+async def delete_juniper_tunnel(id: UUID, 
                         current_user: Annotated[UserPrivate,
                                                     Security(authorize_user, 
                                                     scopes=["tunnel"])]) -> None:
-    await controller.hard_delete(current_user=current_user, id=id)
+    await controller.delete(current_user=current_user, id=id)
     return Response(status_code=status.HTTP_204_NO_CONTENT)

@@ -63,23 +63,7 @@ class JuniperTunnelController(Controller[JuniperTunnelModel, JuniperTunnelFullIn
     async def delete(self, current_user: UserPrivate, id: UUID) -> None:
         try:
             async for session in generate_db_session():
-                await self.repository.delete(id=id, session=session, author_id=current_user.id)
-        except NoResultFound:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
-        return None
-    
-    async def undelete(self, id: UUID) -> JuniperTunnelPublic:
-        try:
-            async for session in generate_db_session():
-                entity = await self.repository.undelete(id=id, session=session)
-        except NoResultFound:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
-        return JuniperTunnelPublic(**(entity.__dict__))
-    
-    async def hard_delete(self, current_user: UserPrivate, id: UUID) -> None:
-        try:
-            async for session in generate_db_session():
-                await self.repository.hard_delete(id=id, session=session)
+                await self.repository.delete(id=id, session=session)
         except NoResultFound:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
         return None

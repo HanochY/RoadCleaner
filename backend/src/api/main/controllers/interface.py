@@ -65,26 +65,7 @@ class InterfaceController(Controller[InterfaceModel, InterfaceFullInput, Interfa
     async def delete(self, current_user: UserPrivate, id: UUID) -> None:
         try:
             async for session in generate_db_session():
-                await self.repository.delete(id=id, session=session, author_id=current_user.id)
-                await session.commit()
-        except NoResultFound:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
-        return None
-    
-    async def undelete(self, id: UUID) -> InterfacePublic:
-        try:
-            async for session in generate_db_session():
-                entity = await self.repository.undelete(id=id, session=session)
-                await session.commit()
-                await session.refresh(entity)
-        except NoResultFound:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
-        return InterfacePublic(**(entity.__dict__))
-    
-    async def hard_delete(self, current_user: UserPrivate, id: UUID) -> None:
-        try:
-            async for session in generate_db_session():
-                await self.repository.hard_delete(id=id, session=session)
+                await self.repository.delete(id=id, session=session)
                 await session.commit()
         except NoResultFound:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)

@@ -52,7 +52,4 @@ async def get_current_user(security_scopes: SecurityScopes,
 
 async def authorize_user(current_user: Annotated[UserPrivate, Security(dependency=get_current_user, scopes=["self:read"])],
 ) -> UserPrivate:
-    print(current_user.is_deleted)
-    if current_user.is_deleted:
-        raise HTTPException(status_code=400, detail="Deleted user")
     return current_user
