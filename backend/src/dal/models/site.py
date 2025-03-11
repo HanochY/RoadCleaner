@@ -7,4 +7,4 @@ class Site(Common):
     __tablename__ = 'site'
     
     name: Mapped[str]
-    devices: Mapped[list["Device"]] = relationship(back_populates="site") # type: ignore
+    devices: Mapped[list["Device"]] = relationship(back_populates="site", cascade='all, delete') # type: ignore

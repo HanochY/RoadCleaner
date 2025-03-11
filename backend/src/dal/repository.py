@@ -48,8 +48,6 @@ class SQLAlchemyRepository():
         return entity
 
     async def delete(self, id: UUID, session: AsyncSession, author_id: UUID) -> Common:
-        await self.hard_delete(id=id, session=session)   
-        await session.rollback()
         statement: Select[tuple[Common]] = select(self.Model).where(self.Model.id == id)
         result: Result[tuple[Common]] = await session.execute(statement=statement)
         entity: Common = result.scalars().one()

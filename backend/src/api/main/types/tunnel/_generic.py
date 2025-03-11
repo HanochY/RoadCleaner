@@ -8,8 +8,8 @@ from typing import Any
 class TunnelPublic(BaseModel, GenericPublic):
     id: UUID
     name: str
-    interface_inner_id: UUID 
-    interface_outer_id: UUID 
+    interface_inner_id: UUID | None
+    interface_outer_id: UUID | None
     reinforced_at: datetime | None = None
     reinforced_by: str | None = None
     tasks: list[TaskPublic]
@@ -21,8 +21,8 @@ class TunnelPublic(BaseModel, GenericPublic):
 class TunnelPrivate(Metadata, GenericPrivate):
     id: UUID
     name: str
-    interface_inner_id: UUID 
-    interface_outer_id: UUID 
+    interface_inner_id: UUID | None
+    interface_outer_id: UUID | None
     reinforced_at: datetime | None = None
     reinforced_by: str | None = None
     tasks: list[TaskPrivate]
@@ -33,8 +33,8 @@ class TunnelPrivate(Metadata, GenericPrivate):
     
 class TunnelFullInput(BaseModel, GenericFullInput):
     name: str
-    interface_inner_id: UUID 
-    interface_outer_id: UUID
+    interface_inner_id: UUID | None
+    interface_outer_id: UUID | None
     class Config(GenericFullInput.Config):
         pass
 

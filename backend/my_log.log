@@ -409,3 +409,15 @@ devices.interfaces
 FROM tunnel JOIN tunnel_details_juniper ON tunnel.id = tunnel_details_juniper.id LEFT OUTER JOIN task AS task_1 ON tunnel.id = task_1.tunnel 
 WHERE tunnel.is_deleted = false]
 (Background on this error at: https://sqlalche.me/e/20/f405)
+[ERROR] - 2025-03-11 12:06:42,149 - root - 808d9eab-8e6f-4f1a-9dd9-1ca669c5dfe6 SQLAlchemyRepository.hard_delete() got an unexpected keyword argument 'author_id'
+[ERROR] - 2025-03-11 12:07:18,939 - root - 808d9eab-8e6f-4f1a-9dd9-1ca669c5dfe6 SQLAlchemyRepository.hard_delete() got an unexpected keyword argument 'author_id'
+[ERROR] - 2025-03-11 12:07:24,625 - root - 4bf37197-3184-47b3-87b0-6ccefa3ce77b (sqlalchemy.dialects.postgresql.asyncpg.IntegrityError) <class 'asyncpg.exceptions.NotNullViolationError'>: null value in column "site" of relation "device" violates not-null constraint
+DETAIL:  Failing row contains (12fced2c-43f5-486d-90bc-e3fd9024d6c2, device2, 4.3.2.1, Cisco, null, f, 2025-03-11 12:05:47.51151, e2108398-6c7c-4dc6-b46d-f6a486ace597, 2025-03-11 12:05:47.51151, e2108398-6c7c-4dc6-b46d-f6a486ace597, null, null).
+[SQL: UPDATE device SET site=$1::UUID WHERE device.id = $2::UUID]
+[parameters: [(None, UUID('12fced2c-43f5-486d-90bc-e3fd9024d6c2')), (None, UUID('46871798-3fc7-4089-81c1-63d7d4e8c51b'))]]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+[ERROR] - 2025-03-11 15:47:18,279 - root - 5a205bb0-94bf-4b08-80be-a466ffbf6f75 (sqlalchemy.dialects.postgresql.asyncpg.IntegrityError) <class 'asyncpg.exceptions.NotNullViolationError'>: null value in column "site" of relation "device" violates not-null constraint
+DETAIL:  Failing row contains (12fced2c-43f5-486d-90bc-e3fd9024d6c2, device2, 4.3.2.1, Cisco, null, f, 2025-03-11 12:05:47.51151, e2108398-6c7c-4dc6-b46d-f6a486ace597, 2025-03-11 12:05:47.51151, e2108398-6c7c-4dc6-b46d-f6a486ace597, null, null).
+[SQL: UPDATE device SET site=$1::UUID WHERE device.id = $2::UUID]
+[parameters: [(None, UUID('12fced2c-43f5-486d-90bc-e3fd9024d6c2')), (None, UUID('46871798-3fc7-4089-81c1-63d7d4e8c51b'))]]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)

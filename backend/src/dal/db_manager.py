@@ -70,15 +70,15 @@ class DatabaseSessionManager:
             raise Exception("DatabaseSessionManager is not initialized")
         async with self._engine.begin() as conn: 
             await conn.run_sync(Base.metadata.create_all)
-        async with session_manager.session() as session:
-        # Example data insertion
-            session.add(DeviceType(name=Vendor.CISCO.value))
-            session.add(DeviceType(name=Vendor.JUNIPER.value))
-            await session.commit()
-
 
 session_manager = DatabaseSessionManager(DATABASE_URL)
 
+async def create_defaults():   
+    async with session_manager.session() as session:
+    # Example data insertion
+        await session.add(DeviceType(name=Vendor.CISCO.value))
+        await session.add(DeviceType(name=Vendor.JUNIPER.value))
+        await session.commit()
 
 async def generate_db_session():
     async with session_manager.session() as session:

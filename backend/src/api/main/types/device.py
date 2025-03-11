@@ -1,4 +1,5 @@
 from api.main.types._generic import GenericPublic, GenericPrivate, GenericFullInput, GenericPartialInput
+from utils.enums.vendor import Vendor
 from api.main.types.metadata import Metadata 
 from api.main.types.interface import InterfacePublic, InterfacePrivate 
 from pydantic import BaseModel, field_validator
@@ -10,7 +11,7 @@ class DevicePublic(BaseModel, GenericPublic):
     id: UUID
     name: str
     ip: IPv4Address
-    type_id: UUID
+    type: Vendor
     site_id: UUID
     interfaces: list[InterfacePublic]
     
@@ -22,7 +23,7 @@ class DevicePrivate(Metadata, GenericPrivate):
     id: UUID
     name: str
     ip: IPv4Address
-    type_id: UUID
+    type: Vendor
     site_id: UUID
     interfaces: list[InterfacePrivate]
     
@@ -33,7 +34,7 @@ class DevicePrivate(Metadata, GenericPrivate):
 class DeviceFullInput(BaseModel, GenericFullInput):
     name: str
     ip: str
-    type_id: UUID
+    type: Vendor
     site_id: UUID
     
     @field_validator('ip')
@@ -45,7 +46,7 @@ class DeviceFullInput(BaseModel, GenericFullInput):
 class DevicePartialInput(BaseModel, GenericPartialInput):
     name: str | None = None
     ip: str | None = None
-    type_id: UUID | None = None
+    type: Vendor | None = None
     site_id: UUID | None = None
     
     @field_validator('ip')

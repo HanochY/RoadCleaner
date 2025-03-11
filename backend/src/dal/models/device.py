@@ -13,4 +13,4 @@ class Device(Common):
     site_id: Mapped[UUID] = mapped_column(ForeignKey("site.id", ondelete="CASCADE"), name="site")
     
     site: Mapped["Site"] = relationship(back_populates="devices") # type: ignore
-    interfaces: Mapped[list["Interface"]] = relationship(back_populates="device") # type: ignore
+    interfaces: Mapped[list["Interface"]] = relationship(back_populates="device", cascade='all, delete') # type: ignore
