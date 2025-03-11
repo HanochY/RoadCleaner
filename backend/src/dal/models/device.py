@@ -1,5 +1,5 @@
 from dal.models._base import Common
-from sqlalchemy import ForeignKey, event ,As
+from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from uuid import uuid4, UUID
 from sqlalchemy.dialects.postgresql import UUID as SQL_UUID

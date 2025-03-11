@@ -22,7 +22,8 @@ async def create_user(new_user: Annotated[UserFullInput, Depends],
 async def read_all_users(current_user: Annotated[UserPrivate,
                                                     Security(authorize_user, 
                                                     scopes=["user:read"])]) -> list[UserPublic] | None:
-    response: list[UserPublic] | None = await controller.read_all()
+    if current_user:
+        response: list[UserPublic] | None = await controller.read_all()
     return response
 
 @router.get('/{id}', status_code=status.HTTP_200_OK)
@@ -30,7 +31,8 @@ async def read_user(id: UUID,
                     current_user: Annotated[UserPrivate,
                                                     Security(authorize_user, 
                                                     scopes=["user:read"])]) -> None:
-    response: UserPublic | None = await controller.read_by_id(id=id)
+    if current_user:
+        response: UserPublic | None = await controller.read_by_id(id=id)
     return response
     
 @router.get('/me', status_code=status.HTTP_200_OK, response_model=UserPublic)
@@ -53,5 +55,6 @@ async def delete_user(id: UUID,
                       current_user: Annotated[UserPrivate,
                                                     Security(authorize_user, 
                                                     scopes=["user"])]) -> None:
-    await controller.delete(current_user=current_user, id=id)
+    if current_user:
+        await controller.delete(id=id)
     return Response(status_code=status.HTTP_204_NO_CONTENT)

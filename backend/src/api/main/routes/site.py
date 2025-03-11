@@ -23,7 +23,8 @@ async def create_site(new_site: Annotated[SiteFullInput, Depends],
 async def read_all_sites(current_user: Annotated[UserPrivate,
                                                     Security(authorize_user, 
                                                     scopes=["site:read"])]) -> list[SitePublic] | None:
-    response: list[SitePublic] | None = await controller.read_all()
+    if current_user:
+        response: list[SitePublic] | None = await controller.read_all()
     return response
 
 @router.get('/{id}', status_code=status.HTTP_200_OK)
@@ -31,7 +32,8 @@ async def read_site(id: UUID,
                     current_user: Annotated[UserPrivate,
                                                     Security(authorize_user, 
                                                     scopes=["site:read"])]) -> None:
-    response: SitePublic | None = await controller.read_by_id(id=id)
+    if current_user:
+        response: SitePublic | None = await controller.read_by_id(id=id)
     return response
 
 @router.patch('/{id}', status_code=status.HTTP_200_OK)
@@ -48,5 +50,6 @@ async def delete_site(id: UUID,
                       current_user: Annotated[UserPrivate,
                                                     Security(authorize_user, 
                                                     scopes=["site"])]) -> None:
-    await controller.delete(current_user=current_user, id=id)
+    if current_user:
+        await controller.delete(id=id)
     return Response(status_code=status.HTTP_204_NO_CONTENT)

@@ -23,7 +23,8 @@ async def create_device(new_device: Annotated[DeviceFullInput, Depends],
 async def read_all_devices(current_user: Annotated[UserPrivate,
                                                     Security(authorize_user, 
                                                     scopes=["device:read"])]) -> list[DevicePublic] | None:
-    response: list[DevicePublic] | None = await controller.read_all()
+    if current_user:
+        response: list[DevicePublic] | None = await controller.read_all()
     return response
 
 @router.get('/{id}', status_code=status.HTTP_200_OK)
@@ -31,7 +32,8 @@ async def read_device(id: UUID,
                       current_user: Annotated[UserPrivate,
                                                     Security(authorize_user, 
                                                     scopes=["device:read"])]) -> None:
-    response: DevicePublic | None = await controller.read_by_id(id=id)
+    if current_user:
+        response: DevicePublic | None = await controller.read_by_id(id=id)
     return response
 
 @router.patch('/{id}', status_code=status.HTTP_200_OK)
@@ -47,5 +49,6 @@ async def delete_device(id: UUID,
                         current_user: Annotated[UserPrivate,
                                                     Security(authorize_user, 
                                                     scopes=["device"])]) -> None:
-    await controller.delete(current_user=current_user, id=id)
+    if current_user:
+        await controller.delete(id=id)
     return Response(status_code=status.HTTP_204_NO_CONTENT)

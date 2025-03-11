@@ -1,11 +1,8 @@
-from codecs import ignore_errors
-from typing import Sequence
-from uuid import uuid4
+
 from typing_extensions import Annotated
 from jwt import InvalidTokenError
 from fastapi import Depends, HTTPException, status, Security
 from fastapi.security import SecurityScopes
-
 from api.main.security.tokens import (
     oauth2_scheme,
     decode_access_token,
@@ -22,7 +19,6 @@ from sqlalchemy import select
 
 async def get_current_user(security_scopes: SecurityScopes, 
     token: Annotated[str, Depends(oauth2_scheme)]) -> UserPrivate:
-    print('bababa')
     user_repository = SQLAlchemyRepository(Model=UserModel)
     authenticate_value = await generate_authenticate_value(security_scopes)
     token_exception = HTTPException(

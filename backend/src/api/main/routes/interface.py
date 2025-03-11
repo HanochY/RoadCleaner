@@ -23,7 +23,8 @@ async def create_interface(new_interface: Annotated[InterfaceFullInput, Depends]
 async def read_all_interfaces(current_user: Annotated[UserPrivate,
                                                     Security(authorize_user, 
                                                     scopes=["interface:read"])]) -> list[InterfacePublic] | None:
-    response: list[InterfacePublic] | None = await controller.read_all()
+    if current_user:
+        response: list[InterfacePublic] | None = await controller.read_all()
     return response
 
 
@@ -33,7 +34,8 @@ async def read_interface(id: UUID,
                          current_user: Annotated[UserPrivate,
                                                     Security(authorize_user, 
                                                     scopes=["interface:read"])]) -> None:
-    response: InterfacePublic | None = await controller.read_by_id(id=id)
+    if current_user:
+        response: InterfacePublic | None = await controller.read_by_id(id=id)
     return response
 
 @router.patch('/{id}', status_code=status.HTTP_200_OK)
@@ -50,5 +52,6 @@ async def delete_interface(id: UUID,
                            current_user: Annotated[UserPrivate,
                                                     Security(authorize_user, 
                                                     scopes=["interface"])]) -> None:
-    await controller.delete(current_user=current_user, id=id)
+    if current_user:
+        await controller.delete(id=id)
     return Response(status_code=status.HTTP_204_NO_CONTENT)

@@ -64,7 +64,7 @@ class DeviceController(Controller[DeviceModel, DeviceFullInput, DevicePartialInp
             raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=str(e))
         return DevicePublic(**(entity.__dict__))
 
-    async def delete(self, current_user: UserPrivate, id: UUID) -> None:
+    async def delete(self, id: UUID) -> None:
         try:
             async for session in generate_db_session():
                 await self.repository.hard_delete(id=id, session=session)

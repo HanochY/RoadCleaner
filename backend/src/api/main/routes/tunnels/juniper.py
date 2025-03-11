@@ -48,5 +48,5 @@ async def delete_juniper_tunnel(id: UUID,
                         current_user: Annotated[UserPrivate,
                                                     Security(authorize_user, 
                                                     scopes=["tunnel"])]) -> None:
-    await controller.delete(current_user=current_user, id=id)
+    await controller.delete(id=id)
     return Response(status_code=status.HTTP_204_NO_CONTENT)
