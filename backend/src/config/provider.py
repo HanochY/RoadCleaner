@@ -5,7 +5,7 @@ from config.loggers.main import LOGGING_CONFIG
 from config.metadata import Metadata
 
 
-class ConfigProvider():
+class ConfigProvider:
     
     @staticmethod
     @lru_cache(maxsize=1)

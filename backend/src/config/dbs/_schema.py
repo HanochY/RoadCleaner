@@ -12,6 +12,7 @@ class DBSettings(BaseSettings):
     PORT: int | None
     USER: str | None
     PASSWORD: str | None
+    KEY: str | None
     VENDOR: Vendor
         
     @computed_field

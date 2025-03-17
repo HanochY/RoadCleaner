@@ -16,7 +16,7 @@ class MainDB:
         NAME: str = "main-dev"
         PORT: int | None = 5432
         USER: str | None = "postgres"
-        PASSWORD: str | None = "postgresking"
+        PASSWORD: str | None
         VENDOR: Vendor = VENDOR_POSTGRESQL
         ENVIRONMENT: Environment = Environment.DEVELOPMENT
 
