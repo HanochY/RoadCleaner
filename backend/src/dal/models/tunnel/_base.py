@@ -11,8 +11,8 @@ class Tunnel(Common):
     name: Mapped[str]
     interface_inner_id: Mapped[UUID | None] = mapped_column(ForeignKey("interface.id"), name="interface_inner", unique=True)
     interface_outer_id: Mapped[UUID | None] = mapped_column(ForeignKey("interface.id"), name="interface_outer", unique=True) 
-    reinforced_at: Mapped[datetime | None] = mapped_column(default=None) #change this name
-    reinforced_by: Mapped[str | None] = mapped_column(default=None) #change this name
+    hardened_at: Mapped[datetime | None] = mapped_column(default=None) #change this name
+    hardened_by: Mapped[str | None] = mapped_column(default=None) #change this name
     vendor: Mapped[str] = mapped_column(String)
     
     __mapper_args__ = {

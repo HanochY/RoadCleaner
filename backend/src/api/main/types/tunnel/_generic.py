@@ -10,8 +10,8 @@ class TunnelPublic(BaseModel, GenericPublic):
     name: str
     interface_inner_id: UUID | None
     interface_outer_id: UUID | None
-    reinforced_at: datetime | None = None
-    reinforced_by: str | None = None
+    hardened_at: datetime | None = None
+    hardened_by: str | None = None
     tasks: list[TaskPublic]
     
     @field_validator('tasks', mode='before')
@@ -23,8 +23,8 @@ class TunnelPrivate(Metadata, GenericPrivate):
     name: str
     interface_inner_id: UUID | None
     interface_outer_id: UUID | None
-    reinforced_at: datetime | None = None
-    reinforced_by: str | None = None
+    hardened_at: datetime | None = None
+    hardened_by: str | None = None
     tasks: list[TaskPrivate]
         
     @field_validator('tasks', mode='before')
