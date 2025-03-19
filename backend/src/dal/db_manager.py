@@ -1,9 +1,11 @@
 
 from config.provider import ConfigProvider
 from dal.models._base import Base
+from utils import passwords
 from utils.enums.vendor import Vendor
 from dal.models.device_type import DeviceType
 from dal.models.device import Device
+from dal.models.device_user import DeviceUser
 from dal.models.interface import Interface
 from dal.models.site import Site
 from dal.models.tunnel._base import Tunnel
@@ -78,6 +80,7 @@ async def create_defaults():
     # Example data insertion
         await session.add(DeviceType(name=Vendor.CISCO.value))
         await session.add(DeviceType(name=Vendor.JUNIPER.value))
+        await session.add(DeviceUser(name="shlomo", password="shlomi"))
         await session.commit()
 
 async def generate_db_session():

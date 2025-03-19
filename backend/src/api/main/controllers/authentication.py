@@ -42,7 +42,8 @@ class AuthenticationController:
                                             "self"]
                 if user.admin:
                     allowed_scopes = allowed_scopes + [
-                                            "device_type",
+                                            "device_user:read",
+                                            "device_user",
                                             "user:read",
                                             "user",]
                 correct_password_hash = user.password

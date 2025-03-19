@@ -15,6 +15,8 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token",
                                     scopes={
                                             "device_type:read": "Read device types.",
                                             "device_type": "Create, Update and Delete device types.",
+                                            "device_user:read": "Read device users.",
+                                            "device_user": "Create, Update and Delete device users.",
                                             "device:read": "Read devices.",
                                             "device": "Create, Update and Delete devices.",
                                             "interface:read": "Read interfaces.",
