@@ -9,6 +9,7 @@ from api.main.routes.authentication_ldap import router as authentication_ldap_ro
 from api.main.routes.authentication import router as authentication_router
 from api.main.routes.device_type import router as device_type_router
 from api.main.routes.device import router as device_router
+from api.main.routes.device import router as device_user_router
 from api.main.routes.interface import router as interface_router
 from api.main.routes.site import router as site_router
 from api.main.routes.tunnels._root import router as tunnel_router
@@ -53,3 +54,4 @@ app.include_router(interface_router)
 app.include_router(site_router)
 app.include_router(tunnel_router)
 app.include_router(user_router)
+app.include_router(device_user_router)
